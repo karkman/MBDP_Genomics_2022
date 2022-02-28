@@ -6,7 +6,7 @@ __notes for course pages organisation (will be removed)__
 - Schedule is a separate document, link under schedule
 - All lecture material (as pdf) should be placed to Lectures folder and links to schedule
 - Materials for practicals to Practicals folder and links to schedule
-- Practicals can be one large README file with headers for different steps (these can be linked to the schedule) or separate documents for each step. 
+- Practicals can be one large README file with headers for different steps (these can be linked to the schedule) or separate documents for each step.
 - Other materials can be linked to this page and/or to the schedule
 
 #######################################################   
@@ -22,7 +22,7 @@ __notes for course pages organisation (will be removed)__
 
 ## Schedule
 
-The course will be from Monday 28th of March to Friday 1st of April in EE-building, Viikki.
+The course will be from Monday 28th of March to Friday 1st of April in EE-building, Viikki.  
 Link to detailed course [schedule.](Schedule.md)
 
 ## Target group
