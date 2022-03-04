@@ -138,7 +138,7 @@ Copy the resulting HTML file to your local machine as earlier and look how well 
 
 
 # Sandbox
-Place to store some scratch code while testing. 
+Place to store some scratch code while testing.
 
 ## checkM
 checkM should work from singularity container. Need to pull the right container (tag: 1.1.3--py_0) to course folder and test it once again
@@ -149,4 +149,11 @@ singularity exec --bind checkM_test/:/checkM_test /projappl/project_2005590/cont
 ## GTDB-tk
 Download database before running
 ```
+# download gtdb database
 wget https://data.ace.uq.edu.au/public/gtdb/data/releases/latest/auxillary_files/gtdbtk_data.tar.gz
+tar -xzf gtdbtk_data.tar.gz
+
+# run gtdbtk
+export GTDBTK_DATA_PATH=/scratch/project_2005590 /databases/GTDB/release202/
+singularity exec --bind $GTDBTK_DATA_PATH:$GTDBTK_DATA_PATH,$PWD:$PWD ~/projappl/containers/gtdbtk_1.7.0--pyhdfd78af_0.sif gtdbtk classify_wf -x fasta --genome_dir checkM_test/ --out_dir gtdb_test --cpus 4  --tmpdir gtdb_test
+```
