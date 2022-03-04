@@ -135,3 +135,18 @@ multiqc FASTQC_TRIMMED/* -o FASTQC_TRIMMED --interactive
 ```
 
 Copy the resulting HTML file to your local machine as earlier and look how well the trimming went.  
+
+
+# Sandbox
+Place to store some scratch code while testing. 
+
+## checkM
+checkM should work from singularity container. Need to pull the right container (tag: 1.1.3--py_0) to course folder and test it once again
+```
+# needs computing node, otherwise runs out of memory
+singularity exec --bind checkM_test/:/checkM_test ~/projappl/containers/checkm-genome_1.1.3--py_0.sif checkm lineage_wf -x fasta /checkM_test /checkM_test -t 4 --tmpdir /checkM_test
+```
+## GTDB-tk
+Download database before running
+```
+wget https://data.ace.uq.edu.au/public/gtdb/data/releases/latest/auxillary_files/gtdbtk_data.tar.gz
