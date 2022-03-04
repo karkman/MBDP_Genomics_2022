@@ -144,7 +144,7 @@ Place to store some scratch code while testing.
 checkM should work from singularity container. Need to pull the right container (tag: 1.1.3--py_0) to course folder and test it once again
 ```
 # needs computing node, otherwise runs out of memory
-singularity exec --bind checkM_test/:/checkM_test ~/projappl/containers/checkm-genome_1.1.3--py_0.sif checkm lineage_wf -x fasta /checkM_test /checkM_test -t 4 --tmpdir /checkM_test
+singularity exec --bind checkM_test/:/checkM_test /projappl/project_2005590/containers/checkM_1.1.3.sif checkm lineage_wf -x fasta /checkM_test /checkM_test -t 4 --tmpdir /checkM_test
 ```
 ## GTDB-tk
 Download database before running
