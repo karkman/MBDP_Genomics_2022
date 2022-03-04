@@ -13,9 +13,9 @@
 
 
 # Kaiju database files
-names=/scratch/project_2005590/kaiju_database/names.dmp
-nodes=/scratch/project_2005590/kaiju_database/nodes.dmp
-db=/scratch/project_2005590/kaiju_database/kaiju_db.fmi
+names=/scratch/project_2005590/databases/kaiju_database/names.dmp
+nodes=/scratch/project_2005590/databases/kaiju_database/nodes.dmp
+db=/scratch/project_2005590/databases/kaiju_database/kaiju_db.fmi
 
 # Cyano strain label and the Kaiju input path variable
 input=spades_327/scaffolds.fasta
