@@ -24,7 +24,7 @@ __notes for course pages organisation (will be removed)__
 
 The course will be from Monday 28th of March to Friday 1st of April in EE-building, Viikki.  
 
-[**Course schedule.**](Schedule.md)
+[**COURSE SCHEDULE**](Schedule.md)
 
 ## Target group
 
