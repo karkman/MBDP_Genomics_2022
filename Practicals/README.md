@@ -17,13 +17,13 @@ Check with `ls`; which folder did `mkdir $USER` create?
 This directory (`/scratch/project_2005590/your-user-name`) is your working directory.  
 Every time you log into Puhti, you should use `cd` to navigate to this directory, and **all the scripts are to be run in this folder**.  
 
-The raw data used on this course can be found in `/scratch/project_2005590/COURSE_FILES/RAWDATA`.  
+The raw data used on this course can be found in `/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ`.  
 Instead of copying the data we will use links to this folder in all of the needed tasks.  
 Why don't we want 14 students copying data to their own folders?
 
 ## QC and trimming
 QC for the raw data takes few minutes, depending on the allocation.  
-Go to your working directory and make a folder called e.g. `FASTQC` for the QC reports.  
+Go to your working directory and make a folder called e.g. `FASTQC_RAW` for the QC reports.  
 
 QC does not require lot of memory and can be run on the interactive nodes using `sinteractive`.   
 
@@ -38,25 +38,18 @@ module load biokit
 Run `fastQC` to the files stored in the RAWDATA folder. What does the `-o` and `-t` flags refer to?
 
 ```bash
-fastqc /scratch/project_2005590/COURSE_FILES/RAWDATA/_FILENAMESHERE_* -o FASTQC/ -t 2
+fastqc /scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/_FILENAMESHERE_* -o FASTQC_RAW/ -t 2
 ```
 
-Running the QC step on all sequence files would take too long, so they are already done and you can just copy them.
-Make sure you're on your own folder before copying.
 
-```bash
-cd /scratch/project_2005590/$USER
-cp -r /scratch/project_2005590/COURSE_FILES/FASTQC_RAW ./
-```
-
-Then combine the reports in FASTQC folder with multiQC:
+To combine the reports in FASTQC folder with multiQC:
 MultiQC is not pre-installed to Puhti, so we have created a virtual environment that has it.
 
 ```bash
 export PROJAPPL=/projappl/project_2005590
 module purge
 module load bioconda/3
-source activate QC_env
+source activate multiqc
 multiqc FASTQC_RAW/* -o FASTQC_RAW --interactive
 ```
 
@@ -69,9 +62,31 @@ After inspecting the output, it should be clear that we need to do some trimming
 __What kind of trimming do you think should be done?__
 
 ### Running Cutadapt
-For trimming we have an array script that runs `Cutadapt` for each file in the `RAWDATA` folder.  
-Go to your working directory and copy the `CUTADAPT.sh` script from `/scratch/project_2001499/COURSE_FILES/SBATCH_SCRIPTS`.  
-Check the script for example with the command `less`.  
+Now each group will work with their won sequences:
+
+#### Illumina Raw sequences for the cyanobacteria strain 328
+R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A045-328-GGTCCATT-AGTAGGCT-Tania-Shishido-run20211223R_S45_L001_R1_001.fastq.gz
+R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A045-328-GGTCCATT-AGTAGGCT-Tania-Shishido-run20211223R_S45_L001_R2_001.fastq.gz
+
+#### Illumina Raw sequences for the cyanobacteria strain 327
+R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A044-327-2-CTTGCCTC-GTTATCTC-Tania-Shishido-run20211223R_S44_L001_R1_001.fastq.gz
+R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A044-327-2-CTTGCCTC-GTTATCTC-Tania-Shishido-run20211223R_S44_L001_R2_001.fastq.gz
+
+#### Illumina Raw sequences for the cyanobacteria strain 193
+R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/Oscillatoria-193_1.fastq.gz
+R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/Oscillatoria-193_2.fastq.gz
+
+```bash
+# To create a link to your cyanobacterial strain:
+strain=328
+
+
+# To create a link to your cyanobacterial strain's sequences:
+R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A045-328-GGTCCATT-AGTAGGCT-Tania-Shishido-run20211223R_S45_L001_R1_001.fastq.gz
+R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A045-328-GGTCCATT-AGTAGGCT-Tania-Shishido-run20211223R_S45_L001_R2_001.fastq.gz
+
+```
+
 The adapter sequences that you want to trim are located after `-a` and `-A`.  
 What is the difference with `-a` and `-A`?  
 And what is specified with option `-p` or `-o`?
@@ -84,15 +99,131 @@ Before running the script, we need to create the directory where the trimmed dat
 mkdir TRIMMED
 ```
 
-Then we need to submit our jos to the SLURM system.  
-Make sure to submit it from your own folder.  
-More about CSC batch jobs here: https://docs.csc.fi/computing/running/creating-job-scripts-puhti/.  
 
 ```bash
-sbatch CUTADAPT.sh
+cutadapt -a CTGTCTCTTATA -A CTGTCTCTTATA -o TRIMMED/"$strain"_cut_1.fastq -p TRIMMED/"$strain"_cut_2.fastq $R1 $R2 --minimum-length 80 > cutadapt.log
+
 ```
 
-You can check the status of your job with:  
+
+### Running fastQC on the trimmed reads
+You could now check the `cutadapt.log` and answer:
+
+* How many read pairs we had originally?
+* How many reads contained adapters?
+* How many read pairs were removed because they were too short?
+* How many base calls were quality-trimmed?
+* Overall, what is the percentage of base pairs that were kept?
+
+Then make a new folder (`FASTQC`) for the QC files of the trimmed data and run fastQC and multiQC again as you did before trimming:
+
+```bash
+mkdir fastqc_out_trimmed
+fastqc *.fastq -o fastqc_out_trimmed/ -t 2
+```
+
+
+
+Copy the resulting HTML file to your local machine as earlier and look how well the trimming went.  
+
+
+
+### Running Prinseq
+
+Did you find problems with the sequences? We can further proceed to quality control using Prinseq.
+
+```bash
+
+module load prinseq
+
+```
+
+Run program using the previous trimmed reads:
+
+```bash
+prinseq-lite.pl \
+-fastq TRIMMED/"$strain"_cut_1.fastq \
+-fastq2 TRIMMED/"$strain"_cut_2.fastq \
+-min_qual_mean 25 \
+-trim_left 10 \
+-trim_right 8 \
+-trim_qual_right 36 \
+-trim_qual_left 30 \
+-min_len 80 \
+-out_good TRIMMED/"$strain"_pseq -log prinseq.log
+```
+
+You can check the `prinseq.log` and run again FastQC on the Prinseq trimmed sequences and copy them to your computer. You can now compare the quality of these sequences with the raw and cutadapt trimmed sequences FastQC results. Did you find any difference?
+
+
+
+```bash
+cd TRIMMED/
+
+fastqc "$strain"_pseq_*.fastq -o fastqc_out_trimmed/ -t 2
+
+```
+
+
+
+
+
+
+
+# Genome assembly with Spades
+Now that you have good trimmed sequences, we can assemble the reads.
+
+
+```bash
+
+sinteractive -A project_2005590
+
+# Activate program
+module load gcc/9.1.0
+module load spades/3.15.0
+
+
+# Cyano strain and processed reads
+strain=328
+R1=TRIMMED/"$strain"_pseq_1.fastq
+R2=TRIMMED/"$strain"_pseq_2.fastq
+
+```
+
+
+
+
+
+# Run Spades
+
+
+```bash
+
+spades.py --only-assembler -1 $R1 -2 $R2 -o "spades_"$strain -t 16
+
+```
+
+
+
+# kaiju installation
+
+```bash
+conda create -y -n kaiju kaiju
+conda install kaiju
+
+```
+
+# Run kaiju batch script
+You can copy the cript from:
+
+```bash
+
+sbatch kaiju_illumina_328.sh
+
+```
+
+se precisar:
+You can check the status of your job with:  /scratch/project_2005590/RAWDATA
 
 ```bash
 squeue -l -u $USER
@@ -106,35 +237,17 @@ seff JOBID
 
 **NOTE:** Change **JOBID** the the job id number you got when you submitted the script.
 
-### Running fastQC on the trimmed reads
-Go to the folder containing the trimmed reads (`TRIMMED`) and view the `Cutadapt` log. Can you answer:
 
-* How many read pairs we had originally?
-* How many reads contained adapters?
-* How many read pairs were removed because they were too short?
-* How many base calls were quality-trimmed?
-* Overall, what is the percentage of base pairs that were kept?
 
-Then make a new folder (`FASTQC`) for the QC files of the trimmed data and run fastQC and multiQC again as you did before trimming:
-Again the QC part would take too long, so we have created the files for you to copy and run only the multiQC part.
 
-```bash
-cd /scratch/project_2005590/$USER
-cp -r /scratch/project_2005590/COURSE_FILES/FASTQC_TRIMMED ./
-```
 
-```bash
-sinteractive -A project_2005590
 
-export PROJAPPL=/projappl/project_2005590
-module load bioconda/3
-conda deactivate
-source activate QC_env
 
-multiqc FASTQC_TRIMMED/* -o FASTQC_TRIMMED --interactive
-```
 
-Copy the resulting HTML file to your local machine as earlier and look how well the trimming went.  
+
+
+
+
 
 
 # Sandbox
