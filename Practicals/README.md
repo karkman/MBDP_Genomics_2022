@@ -49,7 +49,7 @@ MultiQC is not pre-installed to Puhti, so we have created a virtual environment 
 export PROJAPPL=/projappl/project_2005590
 module purge
 module load bioconda/3
-source activate multiqc
+source activate mbdp_genomics
 multiqc FASTQC_RAW/* -o FASTQC_RAW --interactive
 ```
 
@@ -125,12 +125,15 @@ fastqc *.fastq -o fastqc_out_trimmed/ -t 2
 
 
 Copy the resulting HTML file to your local machine as earlier and look how well the trimming went.  
-
+Did you find problems with the sequences? We can further proceed to quality control using Prinseq.
 
 
 ### Running Prinseq
 
-Did you find problems with the sequences? We can further proceed to quality control using Prinseq.
+You could check the different parameters that can be used in prinseq:
+http://prinseq.sourceforge.net/manual.html
+
+
 
 ```bash
 
@@ -196,6 +199,7 @@ R2=TRIMMED/"$strain"_pseq_2.fastq
 
 # Run Spades
 
+Check the commands used using `spades.py -h`
 
 ```bash
 
@@ -208,13 +212,12 @@ spades.py --only-assembler -1 $R1 -2 $R2 -o "spades_"$strain -t 16
 # kaiju installation
 
 ```bash
-conda create -y -n kaiju kaiju
-conda install kaiju
+module load bioconda/3
 
 ```
 
 # Run kaiju batch script
-You can copy the cript from:
+You can copy the script based on the strains your are using from `/scratch/project_2005590/RAWDATA`. You could go through the script and look at https://docs.csc.fi/computing/running/creating-job-scripts-puhti/ and `kaiju -h` before run in your folder:
 
 ```bash
 
@@ -222,8 +225,8 @@ sbatch kaiju_illumina_328.sh
 
 ```
 
-se precisar:
-You can check the status of your job with:  /scratch/project_2005590/RAWDATA
+
+You can check the status of your job with:  **didn't work
 
 ```bash
 squeue -l -u $USER
@@ -236,6 +239,36 @@ seff JOBID
 ```
 
 **NOTE:** Change **JOBID** the the job id number you got when you submitted the script.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
