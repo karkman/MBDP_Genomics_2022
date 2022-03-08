@@ -34,36 +34,9 @@ sinteractive -A project_2005590
 module load biokit
 ```
 
-### Running fastQC
-Run `fastQC` to the files stored in the RAWDATA folder. What does the `-o` and `-t` flags refer to?
+Now each group will work with their own sequences. Create the link to R1 and R2 just for the strain you will use:
 
 ```bash
-fastqc /scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/_FILENAMESHERE_* -o FASTQC_RAW/ -t 2
-```
-
-
-To combine the reports in FASTQC folder with multiQC:
-MultiQC is not pre-installed to Puhti, so we have created a virtual environment that has it.
-
-```bash
-export PROJAPPL=/projappl/project_2005590
-module purge
-module load bioconda/3
-source activate mbdp_genomics
-multiqc FASTQC_RAW/* -o FASTQC_RAW --interactive
-```
-
-To leave the interactive node, type `exit`.  
-
-Copy the resulting HTML file to your local machine with `scp` from the command line (Mac/Linux) or *WinSCP* on Windows.  
-Have a look at the QC report with your favourite browser.  
-
-After inspecting the output, it should be clear that we need to do some trimming.  
-__What kind of trimming do you think should be done?__
-
-### Running Cutadapt
-Now each group will work with their won sequences:
-
 #### Illumina Raw sequences for the cyanobacteria strain 328
 R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A045-328-GGTCCATT-AGTAGGCT-Tania-Shishido-run20211223R_S45_L001_R1_001.fastq.gz
 R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A045-328-GGTCCATT-AGTAGGCT-Tania-Shishido-run20211223R_S45_L001_R2_001.fastq.gz
@@ -75,16 +48,41 @@ R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A044-327-2-CTTGCCTC-GTTAT
 #### Illumina Raw sequences for the cyanobacteria strain 193
 R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/Oscillatoria-193_1.fastq.gz
 R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/Oscillatoria-193_2.fastq.gz
+```
+
+
+You can check if your link is correct by using:
+
+```bash
+echo $R1
+```
+
+
+
+
+### Running fastQC
+Run `fastQC` to the files stored in the RAWDATA folder. What does the `-o` and `-t` flags refer to?
+
+```bash
+fastqc $R1 -o FASTQC_RAW/ -t 2
+
+fastqc $R2 -o FASTQC_RAW/ -t 2
+```
+
+
+
+Copy the resulting HTML file to your local machine with `scp` from the command line (Mac/Linux) or *WinSCP* on Windows.  
+Have a look at the QC report with your favourite browser.  
+
+After inspecting the output, it should be clear that we need to do some trimming.  
+__What kind of trimming do you think should be done?__
+
+### Running Cutadapt
+
 
 ```bash
 # To create a link to your cyanobacterial strain:
 strain=328
-
-
-# To create a link to your cyanobacterial strain's sequences:
-R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A045-328-GGTCCATT-AGTAGGCT-Tania-Shishido-run20211223R_S45_L001_R1_001.fastq.gz
-R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A045-328-GGTCCATT-AGTAGGCT-Tania-Shishido-run20211223R_S45_L001_R2_001.fastq.gz
-
 ```
 
 The adapter sequences that you want to trim are located after `-a` and `-A`.  
@@ -170,6 +168,30 @@ fastqc "$strain"_pseq_*.fastq -o fastqc_out_trimmed/ -t 2
 
 
 
+To combine all the reports .zip in a new `combined_fastqc` folder with multiQC:
+```bash
+mkdir combined_fastqc
+
+cp FASTQC_RAW/*zip combined_fastqc/
+cp TRIMMED/fastqc_out_trimmed/*zip combined_fastqc/
+
+```
+
+
+MultiQC is not pre-installed to Puhti, so we have created a virtual environment that has it.
+
+```bash
+export PROJAPPL=/projappl/project_2005590
+module purge
+module load bioconda/3
+source activate mbdp_genomics
+cd combined_fastqc/
+multiqc . --interactive
+```
+
+To leave the interactive node, type `exit`.  
+
+You can copy the file `multiqc_report.html` to your computer and open it in a webbrowser. Can you see any difference amon the raw and trimmed reads?
 
 
 
