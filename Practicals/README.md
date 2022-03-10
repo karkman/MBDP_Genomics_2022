@@ -25,7 +25,7 @@ Why don't we want 14 students copying data to their own folders?
 
 Puhti uses a scheduling system called SLURM. Most jobs are sent to the queue,  but smaller jobs can be run interactively.
 
-Interactive session is launched with `sinteractive` .   
+Interactive session is launched with `sinteractive`   .   
 You can specify the resources you need for you interactive work interactively with `sinteractive -i`. Or you can give them as options to `sinteractive`.  
 You always need to specify the accounting project (`-A`, `--account`). Otherwise for small jobs you can use the default resources (see below).
 
@@ -48,7 +48,7 @@ You always need to specify the accounting project (`-A`, `--account`). Otherwise
 QC for the raw data takes few minutes, depending on the allocation.  
 Go to your working directory and make a folder called e.g. `FASTQC_RAW` for the QC reports.  
 
-QC does not require lot of memory and can be run on the interactive nodes using `sinteractive`.   
+QC does not require lot of memory and can be run on the interactive nodes using `sinteractive`.
 
 Activate the biokit environment and open interactive node:
 
@@ -87,9 +87,9 @@ echo $R1
 Run `fastQC` to the files stored in the RAWDATA folder. What does the `-o` and `-t` flags refer to?
 
 ```bash
-fastqc $R1 -o FASTQC_RAW/ -t 2
+fastqc $R1 -o FASTQC_RAW/ -t 1
 
-fastqc $R2 -o FASTQC_RAW/ -t 2
+fastqc $R2 -o FASTQC_RAW/ -t 1
 ```
 
 
@@ -140,7 +140,7 @@ Then make a new folder (`FASTQC`) for the QC files of the trimmed data and run f
 
 ```bash
 mkdir fastqc_out_trimmed
-fastqc *.fastq -o fastqc_out_trimmed/ -t 2
+fastqc *.fastq -o fastqc_out_trimmed/ -t 1
 ```
 
 
@@ -184,7 +184,7 @@ You can check the `prinseq.log` and run again FastQC on the Prinseq trimmed sequ
 ```bash
 cd TRIMMED/
 
-fastqc "$strain"_pseq_*.fastq -o fastqc_out_trimmed/ -t 2
+fastqc "$strain"_pseq_*.fastq -o fastqc_out_trimmed/ -t 1
 
 ```
 
@@ -220,11 +220,14 @@ You can copy the file `multiqc_report.html` to your computer and open it in a we
 
 # Genome assembly with Spades
 Now that you have good trimmed sequences, we can assemble the reads.
-
+For assembling you will need more resources than the default.  
+Allocate 8 cpus, 20000 Mb of memory (20G) and 4 hours.  
+Remember also the accounting project, `project_2005590`.
 
 ```bash
 
-sinteractive -A project_2005590
+# Remember to modify  this
+sinteractive --account --time --mem --cores
 
 # Activate program
 module load gcc/9.1.0
@@ -247,10 +250,10 @@ R2=TRIMMED/"$strain"_pseq_2.fastq
 Check the commands used using `spades.py -h`
 
 ```bash
-
-spades.py --only-assembler -1 $R1 -2 $R2 -o "spades_"$strain -t 16
-
+spades.py --only-assembler -1 $R1 -2 $R2 -o "spades_"$strain -t 8
 ```
+
+Remember to close the interactive connection and free the resourses after use with `exit`.
 
 
 
