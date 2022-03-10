@@ -6,6 +6,7 @@ __TOC:__
 2. [Interactive use of Puhti](#interactive-use-of-puhti)
 3. [QC and trimming](#qc-and-trimming)
 4. [Genome assembly with Spades](#genome-assembly-with-spades)
+5. [Kaiju](#kaiju)
 
 
 ## Setting up the course folders
@@ -247,11 +248,7 @@ R2=TRIMMED/"$strain"_pseq_2.fastq
 
 ```
 
-
-
-
-
-# Run Spades
+### Run Spades
 
 Check the commands used using `spades.py -h`
 
@@ -263,14 +260,14 @@ Remember to close the interactive connection and free the resourses after use wi
 
 
 
-# kaiju installation
+## kaiju
 
 ```bash
 module load bioconda/3
 
 ```
 
-# Run kaiju batch script
+### Run kaiju batch script
 You can copy the script based on the strains your are using from `/scratch/project_2005590/RAWDATA`. You could go through the script and look at https://docs.csc.fi/computing/running/creating-job-scripts-puhti/ and `kaiju -h` before run in your folder:
 
 ```bash
