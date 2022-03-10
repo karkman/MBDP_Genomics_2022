@@ -21,6 +21,29 @@ The raw data used on this course can be found in `/scratch/project_2005590/COURS
 Instead of copying the data we will use links to this folder in all of the needed tasks.  
 Why don't we want 14 students copying data to their own folders?
 
+## Interactive use of Puhti
+
+Puhti uses a scheduling system called SLURM. Most jobs are sent to the queue,  but smaller jobs can be run interactively.
+
+Interactive session is launched with `sinteractive` .   
+You can specify the resources you need for you interactive work interactively with `sinteractive -i`. Or you can give them as options to `sinteractive`.  
+You always need to specify the accounting project (`-A`, `--account`). Otherwise for small jobs you can use the default resources (see below).
+
+| Option | Function | Default | Max | 
+| --     | --       | --      | --  |
+| -i, --interactive | set resources interactively | | |
+| -t,  --time | Reservation in minutes or in format d-hh:mm:ss | 24:00:00 | 7-00:00:00 |
+| -m, --mem | Memory in Mb       | 2000     | 76000  |
+| -j, --jobname |Job name       | interactive     |   |
+| -c, --cores     | Number of cores       | 1      | 8  |
+| -A, --account     | Accounting project       |       |  |
+| -d, --tmp     | $TMPDIR size (in GiB)      |  32     | 760  |
+| -g, --gpu     | Number of GPUs       | 0     | 0 |
+
+
+[__Read more about interactive use of Puhti.__](https://docs.csc.fi/computing/running/interactive-usage/#sinteractive-in-puhti)   
+
+
 ## QC and trimming
 QC for the raw data takes few minutes, depending on the allocation.  
 Go to your working directory and make a folder called e.g. `FASTQC_RAW` for the QC reports.  
