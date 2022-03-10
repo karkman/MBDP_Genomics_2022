@@ -1,6 +1,12 @@
 # Practicals
-
 All material for practical parts in this folder
+
+__TOC:__
+1. [Setting up](#setting-up-the-course-folders)
+2. [Interactive use of Puhti](#interactive-use-of-puhti)
+3. [QC and trimming](#qc-and-trimming)
+4. [Genome assembly with Spades](#genome-assembly-with-spades)
+
 
 ## Setting up the course folders
 The main course directory is located in `/scratch/project_2005590`.  
@@ -218,7 +224,7 @@ You can copy the file `multiqc_report.html` to your computer and open it in a we
 
 
 
-# Genome assembly with Spades
+## Genome assembly with Spades
 Now that you have good trimmed sequences, we can assemble the reads.
 For assembling you will need more resources than the default.  
 Allocate 8 cpus, 20000 Mb of memory (20G) and 4 hours.  
