@@ -292,60 +292,18 @@ seff JOBID
 **NOTE:** Change **JOBID** the the job id number you got when you submitted the script.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ## Sandbox
 Place to store some scratch code while testing.
 
 ### checkM
 checkM should work from singularity container. Need to pull the right container (tag: 1.1.3--py_0) to course folder and test it once again
 ```
-# needs computing node, otherwise runs out of memory
+# needs computing node, otherwise runs out of memory (40G)
 singularity exec --bind checkM_test/:/checkM_test /projappl/project_2005590/containers/checkM_1.1.3.sif \
               checkm lineage_wf -x fasta /checkM_test /checkM_test -t 4 --tmpdir /checkM_test
 ```
 ### GTDB-tk
-Download database before running
+Download database before running, needs >50G
 ```
 # download gtdb database
 wget https://data.ace.uq.edu.au/public/gtdb/data/releases/latest/auxillary_files/gtdbtk_data.tar.gz
@@ -361,4 +319,10 @@ singularity exec --bind $GTDBTK_DATA_PATH:$GTDBTK_DATA_PATH,$PWD:$PWD  /projappl
 ### quast
 ```
 singularity exec --bind $PWD:$PWD ~/bin/quast.sif quast.py -o quast_out */contigs.fasta -t 4
+```
+
+### basecalling
+```
+~/projappl/ont-guppy/bin/guppy_basecaller -i fast5_pass/ -s BASECALLED/ -c ~/projappl/ont-guppy/data/dna_r9.4.1_450bps_hac.cfg --device auto --min_qscore 10
+cat BASECALLED/pass/*.fastq |gzip > BASECALLED/strain_328_nanopore.fastq.gz
 ```
