@@ -256,9 +256,20 @@ Check the commands used using `spades.py -h`
 spades.py --only-assembler -1 $R1 -2 $R2 -o "spades_"$strain -t 8
 ```
 
-Remember to close the interactive connection and free the resourses after use with `exit`.
+If you have time, you can try different options for assembly. Read more from [here](https://cab.spbu.ru/files/release3.15.0/manual.html) and experiment.  
+Remember to rename the output folder for your different experiments.
+
+After you're done, remember to close the interactive connection and free the resources with `exit`.
 
 
+## Assembly QC
+
+After the assembly has finished we will use Quality Assessment Tool for Genome Assemblies, [Quast](http://quast.sourceforge.net/) for (comparing and) evaluating our assemblies. Quast can be found from Puhti, but since there might be some incompability issues with Python2 and Python3, we will use a Singularity container that has Quast installed.  
+More about Singularity: [More general introduction](https://sylabs.io/guides/3.5/user-guide/introduction.html) and [a bit more CSC specific](https://docs.csc.fi/computing/containers/run-existing/).
+
+```
+singularity exec --bind $PWD:$PWD /projappl/project_2005590/containers/quast_5.0.2.sif quast.py -o quast_out */contigs.fasta -t 4
+```
 
 ## kaiju
 
@@ -303,7 +314,7 @@ singularity exec --bind checkM_test/:/checkM_test /projappl/project_2005590/cont
               checkm lineage_wf -x fasta /checkM_test /checkM_test -t 4 --tmpdir /checkM_test
 ```
 ### GTDB-tk
-Download database before running, needs >50G
+Download database before running, needs >200G
 ```
 # download gtdb database
 wget https://data.ace.uq.edu.au/public/gtdb/data/releases/latest/auxillary_files/gtdbtk_data.tar.gz
@@ -326,3 +337,78 @@ singularity exec --bind $PWD:$PWD ~/bin/quast.sif quast.py -o quast_out */contig
 ~/projappl/ont-guppy/bin/guppy_basecaller -i fast5_pass/ -s BASECALLED/ -c ~/projappl/ont-guppy/data/dna_r9.4.1_450bps_hac.cfg --device auto --min_qscore 10
 cat BASECALLED/pass/*.fastq |gzip > BASECALLED/strain_328_nanopore.fastq.gz
 ```
+
+
+### Anvio pangenomics
+```
+mkdir pangenomics
+cd pangenomics
+
+singularity exec --bind $PWD:$PWD,../all-genomes-193:/all-genomes-193 ~/bin/anvio_7.sif \
+          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_193.fasta -r reformat_193_report.txt /all-genomes-193/strain_328_MAG_00004-contigs.fa
+
+singularity exec --bind $PWD:$PWD,../assembly_327-2:/assembly_327-2 ~/bin/anvio_7.sif \
+          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_327_2.fasta -r reformat_327_2_report.txt /assembly_327-2/contigs.fasta
+
+singularity exec --bind $PWD:$PWD,../assembly_328:/assembly_328 ~/bin/anvio_7.sif \
+          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_328.fasta -r reformat_328_report.txt /assembly_328/contigs.fasta
+
+cp ../../COURSE_FILES/closest_oscillatoriales_genomes/*.fasta.gz ./
+gunzip *.gz
+
+module load biokit
+for strain in $(ls *.fasta); do prokka --outdir ${strain%.fasta} --prefix ${strain%.fasta} $strain; done
+
+for genome in $(ls */*gbf); do singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif anvi-script-process-genbank -i $genome -O ${genome%/*} --annotation-source "prodigal" --annotation-version "v2.6.3"; done
+
+# make a fasta.txt file from these for pangenomics workflow
+
+for strain in $(ls *-contigs.fa)
+do
+    echo -e ${strain%-contigs.fa}"\t"$strain"\t"${strain%-contigs.fa}"-external-gene-calls.txt\t"${strain%-contigs.fa}"-external-functions.txt"
+done > fasta.txt
+
+# afterwards add headers to fasta.txt file in any text editor, separated with tab
+##  name  path	external_gene_calls	gene_functional_annotation
+
+# And make a config.json file:
+{
+    "workflow_name": "pangenomics",
+    "config_version": "2",
+    "project_name": "Oscillatoriales_pangenome",
+    "external_genomes": "external-genomes.txt",
+    "fasta_txt": "fasta.txt",
+    "anvi_gen_contigs_database": {
+        "--project-name": "{group}",
+        "--description": "",
+        "--skip-gene-calling": "",
+        "--ignore-internal-stop-codons": true,
+        "--skip-mindful-splitting": "",
+        "--contigs-fasta": "",
+        "--split-length": "",
+        "--kmer-size": "",
+        "--skip-predict-frame": "",
+        "--prodigal-translation-table": "",
+        "threads": ""
+    },
+    "anvi-gen-genomes-storage": {
+        "--gene-caller": "NCBI_PGAP"
+      },
+    "output_dirs": {
+        "FASTA_DIR": "01_FASTA_contigs_workflow",
+        "CONTIGS_DIR": "02_CONTIGS_contigs_workflow",
+        "LOGS_DIR": "00_LOGS_pan_workflow"
+    }
+}
+
+# TOIMII
+singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif anvi-run-workflow -w pangenomics -c config.json
+
+anvi-display-pan -g Oscillatoriales_pangenome-GENOMES.db -p Oscillatoriales_pangenome-PAN.db
+
+anvi-get-sequences-for-gene-clusters -p 03_PAN/Oscillatoriales_pangenome-PAN.db \
+                                     -g 03_PAN/Oscillatoriales_pangenome-GENOMES.db \
+                                     -C pangenome -b SCG \
+                                     --concatenate-gene-clusters \
+                                     -o single-copy-core-genes.fa                               
+anvi-gen-phylogenomic-tree
