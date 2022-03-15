@@ -340,6 +340,8 @@ cat BASECALLED/pass/*.fastq |gzip > BASECALLED/strain_328_nanopore.fastq.gz
 
 
 ### Anvio pangenomics
+
+Reserve enough memory > 40 G
 ```
 mkdir pangenomics
 cd pangenomics
@@ -359,7 +361,7 @@ gunzip *.gz
 module load biokit
 for strain in $(ls *.fasta); do prokka --outdir ${strain%.fasta} --prefix ${strain%.fasta} $strain; done
 
-for genome in $(ls */*gbf); do singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif anvi-script-process-genbank -i $genome -O ${genome%/*} --annotation-source "prodigal" --annotation-version "v2.6.3"; done
+for genome in $(ls */*gbf); do singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif anvi-script-process-genbank -i $genome -O ${genome%/*} --annotation-source prodigal --annotation-version v2.6.3; done
 
 # make a fasta.txt file from these for pangenomics workflow
 
@@ -391,9 +393,6 @@ done > fasta.txt
         "--prodigal-translation-table": "",
         "threads": ""
     },
-    "anvi-gen-genomes-storage": {
-        "--gene-caller": "NCBI_PGAP"
-      },
     "output_dirs": {
         "FASTA_DIR": "01_FASTA_contigs_workflow",
         "CONTIGS_DIR": "02_CONTIGS_contigs_workflow",
@@ -401,7 +400,6 @@ done > fasta.txt
     }
 }
 
-# TOIMII
 singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif anvi-run-workflow -w pangenomics -c config.json
 
 anvi-display-pan -g Oscillatoriales_pangenome-GENOMES.db -p Oscillatoriales_pangenome-PAN.db
@@ -411,4 +409,5 @@ anvi-get-sequences-for-gene-clusters -p 03_PAN/Oscillatoriales_pangenome-PAN.db 
                                      -C pangenome -b SCG \
                                      --concatenate-gene-clusters \
                                      -o single-copy-core-genes.fa                               
-anvi-gen-phylogenomic-tree
+anvi-gen-phylogenomic-tree -f single-copy-core-genes.fa  \
+                          -o SCG.tre
