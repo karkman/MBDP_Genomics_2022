@@ -38,14 +38,14 @@ You always need to specify the accounting project (`-A`, `--account`). Otherwise
 
 | Option | Function | Default | Max | 
 | --     | --       | --      | --  |
-| -i, --interactive | set resources interactively | | |
+| -i, --interactive | set resources interactively |  |  |  
 | -t,  --time | Reservation in minutes or in format d-hh:mm:ss | 24:00:00 | 7-00:00:00 |
-| -m, --mem | Memory in Mb       | 2000     | 76000  |
-| -j, --jobname |Job name       | interactive     |   |
-| -c, --cores     | Number of cores       | 1      | 8  |
-| -A, --account     | Accounting project       |       |  |
-| -d, --tmp     | $TMPDIR size (in GiB)      |  32     | 760  |
-| -g, --gpu     | Number of GPUs       | 0     | 0 |
+| -m, --mem | Memory in Mb       | 2000     | 76000  |  
+| -j, --jobname |Job name       | interactive     |   |  
+| -c, --cores     | Number of cores       | 1      | 8  |  
+| -A, --account     | Accounting project       |       |  |  
+| -d, --tmp     | $TMPDIR size (in GiB)      |  32     | 760  |  
+| -g, --gpu     | Number of GPUs       | 0     | 0 |  
 
 
 [__Read more about interactive use of Puhti.__](https://docs.csc.fi/computing/running/interactive-usage/#sinteractive-in-puhti)   
@@ -361,7 +361,16 @@ gunzip *.gz
 module load biokit
 for strain in $(ls *.fasta); do prokka --outdir ${strain%.fasta} --prefix ${strain%.fasta} $strain; done
 
-for genome in $(ls */*gbf); do singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif anvi-script-process-genbank -i $genome -O ${genome%/*} --annotation-source prodigal --annotation-version v2.6.3; done
+# process genbank files
+for genome in $(ls */*gbf)
+do
+    singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+                                        anvi-script-process-genbank \
+                                            -i $genome -O ${genome%/*} \
+                                            --annotation-source prodigal \
+                                            --annotation-version v2.6.3
+done
+
 
 # make a fasta.txt file from these for pangenomics workflow
 
@@ -402,12 +411,22 @@ done > fasta.txt
 
 singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif anvi-run-workflow -w pangenomics -c config.json
 
-anvi-display-pan -g Oscillatoriales_pangenome-GENOMES.db -p Oscillatoriales_pangenome-PAN.db
+export ANVIOPORT=PORT
+singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+                                    anvi-display-pan \
+                                        -g Oscillatoriales_pangenome-GENOMES.db \
+                                        -p Oscillatoriales_pangenome-PAN.db \
+                                        --server-only -P $ANVIOPORT
 
-anvi-get-sequences-for-gene-clusters -p 03_PAN/Oscillatoriales_pangenome-PAN.db \
-                                     -g 03_PAN/Oscillatoriales_pangenome-GENOMES.db \
-                                     -C pangenome -b SCG \
-                                     --concatenate-gene-clusters \
-                                     -o single-copy-core-genes.fa                               
-anvi-gen-phylogenomic-tree -f single-copy-core-genes.fa  \
-                          -o SCG.tre
+singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+                                    anvi-get-sequences-for-gene-clusters \
+                                        -p 03_PAN/Oscillatoriales_pangenome-PAN.db \
+                                        -g 03_PAN/Oscillatoriales_pangenome-GENOMES.db \
+                                        -C default -b SCG \
+                                        --concatenate-gene-clusters \
+                                        -o single-copy-core-genes.fa                               
+
+singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+                                    anvi-gen-phylogenomic-tree \
+                                        -f single-copy-core-genes.fa  \
+                                        -o SCG.tre
