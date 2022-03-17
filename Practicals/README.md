@@ -36,8 +36,8 @@ Interactive session is launched with `sinteractive`   .
 You can specify the resources you need for you interactive work interactively with `sinteractive -i`. Or you can give them as options to `sinteractive`.  
 You always need to specify the accounting project (`-A`, `--account`). Otherwise for small jobs you can use the default resources (see below).
 
-| Option | Function | Default | Max | 
-| --     | --       | --      | --  |
+| Option | Function | Default | Max |  
+| --     | --       | --      | --  |  
 | -i, --interactive | set resources interactively |  |  |  
 | -t,  --time | Reservation in minutes or in format d-hh:mm:ss | 24:00:00 | 7-00:00:00 |
 | -m, --mem | Memory in Mb       | 2000     | 76000  |  
