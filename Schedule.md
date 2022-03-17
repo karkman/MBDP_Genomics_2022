@@ -7,7 +7,7 @@
 | 09:30-09:45 | **Antti Karkman**: Basic usage of computing service at CSC |
 | 09:45-10:45 | **David Fewer**: Cyanobacteria|
 
-| 11:00-11:45 | **Antti Karkamn**: Sequence data |
+| 11:00-11:45 | **Antti Karkaman**: Sequence data |
 | 11:45-12:00 | **Jenni Hultman**: Seq trimming and QCAssembly lecture |
 | 12:00-13:00 | **Lunch** |
 | 13:30-17:00 | **ALL???**: [From reads to assemblies: working with INNUca pipeline](https://github.com/INNUENDOCON/MicrobialGenomeMetagenomeCourse/blob/master/MPM_workingwithINNUCA.md) |
