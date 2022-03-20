@@ -4,9 +4,11 @@ All material for practical parts in this folder
 __TOC:__
 1. [Setting up](#setting-up-the-course-folders)
 2. [Interactive use of Puhti](#interactive-use-of-puhti)
-3. [QC and trimming](#qc-and-trimming)
-4. [Genome assembly with Spades](#genome-assembly-with-spades)
-5. [Kaiju](#kaiju)
+3. [QC and trimming for Illumina reads](#qc-and-trimming-for-illumina-reads)
+4. [QC and trimming for Nanopore reads](#qc-and-trimming-for-nanopore-reads)
+5. [Hybrid genome assembly with Spades](#hybrid-genome-assembly-with-spades)
+6. [Eliminate contaminant contigs with Kaiju](#eliminate-contaminant-contigs-with-kaiju)
+
 
 
 ## Setting up the course folders
@@ -51,7 +53,7 @@ You always need to specify the accounting project (`-A`, `--account`). Otherwise
 [__Read more about interactive use of Puhti.__](https://docs.csc.fi/computing/running/interactive-usage/#sinteractive-in-puhti)   
 
 
-## QC and trimming
+## QC and trimming for Illumina reads
 QC for the raw data takes few minutes, depending on the allocation.  
 Go to your working directory and make a folder called e.g. `FASTQC_RAW` for the QC reports.  
 
@@ -64,7 +66,7 @@ sinteractive -A project_2005590
 module load biokit
 ```
 
-Now each group will work with their own sequences. Create the link to R1 and R2 just for the strain you will use:
+Now each group will work with their own sequences. Create the variables R1 and R2 to represent the path to your files. Do that just for the strain you will use:
 
 ```bash
 #### Illumina Raw sequences for the cyanobacteria strain 328
@@ -81,10 +83,11 @@ R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/Oscillatoria-193_2.fastq.
 ```
 
 
-You can check if your link is correct by using:
+You can check if your variable was set correctly by using:
 
 ```bash
 echo $R1
+echo $R2
 ```
 
 
@@ -111,7 +114,7 @@ __What kind of trimming do you think should be done?__
 
 
 ```bash
-# To create a link to your cyanobacterial strain:
+# To create a variable to your cyanobacterial strain:
 strain=328
 ```
 
@@ -156,7 +159,7 @@ Copy the resulting HTML file to your local machine as earlier and look how well 
 Did you find problems with the sequences? We can further proceed to quality control using Prinseq.
 
 
-### Running Prinseq
+#### Running Prinseq
 
 You could check the different parameters that can be used in prinseq:
 http://prinseq.sourceforge.net/manual.html
@@ -224,6 +227,46 @@ To leave the interactive node, type `exit`.
 You can copy the file `multiqc_report.html` to your computer and open it in a webbrowser. Can you see any difference amon the raw and trimmed reads?
 
 
+## QC and trimming for Nanopore reads
+
+The QC for the Nanopore reads can be done with NanoPlot and NanoQC. They are plotting tools for long read sequencing data and alignments. You can read more about them in: [NanoPlot](https://github.com/wdecoster/NanoPlot) and [NanoQC](https://github.com/wdecoster/nanoQC)
+
+NanoPlot and NanoQC are not pre-installed to Puhti so we need to reset the modules and activate the virtual environment. If the environment is already loaded you can skip this step.
+
+```bash
+export PROJAPPL=/projappl/project_2005590
+module purge
+module load bioconda/3
+source activate mbdp_genomics
+```
+
+Generate graphs for visualization of reads quality and length distribution 
+
+```bash
+NanoPlot -o nanoplot_out -t 4 -f png --fastq your_raw_nanopore_reads.fastq.gz
+nanoQC -o nanoQC_out your_raw_nanopore_reads.fastq.gz
+```
+
+Check two plots inside the nanoplot output folder:
+Reads quality distribution: `LengthvsQualityScatterPlot_kde.png`
+Reads length distribution: `Non_weightedLogTransformed_HistogramReadlength.png`
+
+Using the Puhti interactive mode, check the file `nanoQC.html` inside the ouput folder of the nanoQC job.
+* How is the quality at the beginning and at the end of the reads? How many bases would cut from these regions?
+
+### Trimming and quality filtering of reads
+
+The following command will trim the first 30 bases and the last 20 bases of each read, exclude reads with a phred score below 12 and exclude reads with less than 1000 bp.
+
+```bash
+gunzip -c raw.nanopore.328.fastq.gz | NanoFilt -q 12 -l 1000 --headcrop 30 --tailcrop 20 | gzip > nanopore.trimmed.fastq.gz
+```
+
+### Optional - Visualizing the trimmed data
+```bash
+NanoPlot -o nanoplot_out -t 4 -f png --fastq nanopore.trimmed.fastq.gz
+```
+
 
 ## Genome assembly with Spades
 Now that you have good trimmed sequences, we can assemble the reads.
@@ -235,6 +278,12 @@ Remember also the accounting project, `project_2005590`.
 
 # Remember to modify  this
 sinteractive --account --time --mem --cores
+
+
+# Deactivate the current virtual environment and reset the modules before loanding Spades
+source deactivate mbdp_genomics
+module purge
+
 
 # Activate program
 module load gcc/9.1.0
@@ -253,7 +302,7 @@ R2=TRIMMED/"$strain"_pseq_2.fastq
 Check the commands used using `spades.py -h`
 
 ```bash
-spades.py --only-assembler -1 $R1 -2 $R2 -o "spades_"$strain -t 8
+spades.py --isolate --nanopore nanopore.trimmed.fastq.gz -1 $R1 -2 $R2 -o spades_hybrid_out -t 8
 ```
 
 If you have time, you can try different options for assembly. Read more from [here](https://cab.spbu.ru/files/release3.15.0/manual.html) and experiment.  
@@ -271,22 +320,24 @@ More about Singularity: [More general introduction](https://sylabs.io/guides/3.5
 singularity exec --bind $PWD:$PWD /projappl/project_2005590/containers/quast_5.0.2.sif quast.py -o quast_out */contigs.fasta -t 4
 ```
 
-## kaiju
+## Eliminate contaminant contigs with Kaiju
+
+Kaiju is pre-installed to Puhti so we need to reset the modules and activate the virtual environment again.
 
 ```bash
+export PROJAPPL=/projappl/project_2005590
+module purge
 module load bioconda/3
-
+source activate mbdp_genomics
 ```
 
 ### Run kaiju batch script
-You can copy the script based on the strains your are using from `/scratch/project_2005590/RAWDATA`. You could go through the script and look at https://docs.csc.fi/computing/running/creating-job-scripts-puhti/ and `kaiju -h` before run in your folder:
+To run Kaiju you can use the script in `/scratch/project_2005590/COURSE_FILES/run_kaiju.sh`. This script takes your assembly as input and will eliminate all sequences not classified as cyanobacteria, creating a new "clean" file. You could go through the script and look at https://docs.csc.fi/computing/running/creating-job-scripts-puhti/ and `kaiju -h` before run in your folder:
+
 
 ```bash
-
-sbatch kaiju_illumina_328.sh
-
+sbatch /scratch/project_2005590/COURSE_FILES/run_kaiju.sh -i spades_hybrid_out/scaffolds.fasta -o kaiju_out
 ```
-
 
 You can check the status of your job with:  **didn't work
 
