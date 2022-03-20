@@ -322,7 +322,7 @@ singularity exec --bind $PWD:$PWD /projappl/project_2005590/containers/quast_5.0
 
 ## Eliminate contaminant contigs with Kaiju
 
-Kaiju is pre-installed to Puhti so we need to reset the modules and activate the virtual environment again.
+Kaiju is no pre-installed to Puhti so we need to reset the modules and activate the virtual environment again.
 
 ```bash
 export PROJAPPL=/projappl/project_2005590
