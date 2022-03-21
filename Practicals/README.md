@@ -206,7 +206,7 @@ To combine all the reports .zip in a new `combined_fastqc` folder with multiQC:
 mkdir combined_fastqc
 
 cp fastqc_raw/*zip combined_fastqc/
-cp trimmed/fastqc_out_trimmed/*zip combined_fastqc/
+cp fastqc_out_trimmed/*zip combined_fastqc/
 
 ```
 
