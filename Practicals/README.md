@@ -240,11 +240,13 @@ module load bioconda/3
 source activate mbdp_genomics
 ```
 
+The nanopore data you will use can be found in the folder `/scratch/project_2005590/COURSE_FILES/RAWDATA_NANOPORE`
+
 Generate graphs for visualization of reads quality and length distribution 
 
 ```bash
-NanoPlot -o nanoplot_out -t 4 -f png --fastq your_raw_nanopore_reads.fastq.gz
-nanoQC -o nanoQC_out your_raw_nanopore_reads.fastq.gz
+NanoPlot -o nanoplot_out -t 4 -f png --fastq path-to/your_raw_nanopore_reads.fastq.gz
+nanoQC -o nanoQC_out path-to/your_raw_nanopore_reads.fastq.gz
 ```
 
 Check two plots inside the nanoplot output folder:
