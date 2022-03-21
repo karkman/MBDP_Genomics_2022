@@ -16,7 +16,7 @@
 ## Tuesday - EE-building, Walter-sali
 | Time | Description |
 | --- | --- |
-| 09:00-9:30 | **Endrews Delbaje**: Annotation lecture|
+| 08:30-9:30 | **Endrews Delbaje**: Annotation lecture|
 | 9:30-12:00 | **Endrews Delbaje OR Tania?**: Assmebly QC lecture and hands-on| 
 | 12:00-13:00 | **lunch** |
 | 13:00-15:00 | **Endrews Delbaje**: Annotation hands-on |
@@ -26,7 +26,7 @@
 ## Wednesday - EE-building, sh 11+12
 | Time | Description |
 | --- | --- |
-| 09:00-09:30 | **Antti Karkaman**: Introduction to Anvi'o|
+| 08:30-09:30 | **Antti Karkaman**: Introduction to Anvi'o|
 | 09:30-10.30 | **Antti Karkaman**: Population genomics |
 | 10:30-12:00 | **ALL**: Population genomics hands-on |
 | 12:00-13:00 | **Lunch**: |
