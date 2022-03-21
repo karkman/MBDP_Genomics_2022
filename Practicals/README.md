@@ -311,14 +311,14 @@ module load spades/3.15.0
 
 # Cyano strain and processed reads
 strain=328
-R1=TRIMMED/"$strain"_pseq_1.fastq
-R2=TRIMMED/"$strain"_pseq_2.fastq
+R1=trimmed/"$strain"_pseq_1.fastq
+R2=trimmed/"$strain"_pseq_2.fastq
 
 ```
 
 ### Run Spades
 
-Check the commands used using `spades.py -h`
+We will use the trimmed Illumina and Nanopore sequences to assemble the cyanobacteria genomes. Check the commands used using `spades.py -h` 
 
 ```bash
 spades.py --isolate --nanopore nanopore.trimmed.fastq.gz -1 $R1 -2 $R2 -o spades_hybrid_out -t 8
@@ -330,14 +330,6 @@ Remember to rename the output folder for your different experiments.
 After you're done, remember to close the interactive connection and free the resources with `exit`.
 
 
-## Assembly QC
-
-After the assembly has finished we will use Quality Assessment Tool for Genome Assemblies, [Quast](http://quast.sourceforge.net/) for (comparing and) evaluating our assemblies. Quast can be found from Puhti, but since there might be some incompability issues with Python2 and Python3, we will use a Singularity container that has Quast installed.  
-More about Singularity: [More general introduction](https://sylabs.io/guides/3.5/user-guide/introduction.html) and [a bit more CSC specific](https://docs.csc.fi/computing/containers/run-existing/).
-
-```
-singularity exec --bind $PWD:$PWD /projappl/project_2005590/containers/quast_5.0.2.sif quast.py -o quast_out */contigs.fasta -t 4
-```
 
 ## Eliminate contaminant contigs with Kaiju
 
@@ -371,6 +363,17 @@ seff JOBID
 ```
 
 **NOTE:** Change **JOBID** the the job id number you got when you submitted the script.
+
+
+## Assembly QC
+
+After the assembly has finished we will use Quality Assessment Tool for Genome Assemblies, [Quast](http://quast.sourceforge.net/) for (comparing and) evaluating our assemblies. Quast can be found from Puhti, but since there might be some incompability issues with Python2 and Python3, we will use a Singularity container that has Quast installed.  
+More about Singularity: [More general introduction](https://sylabs.io/guides/3.5/user-guide/introduction.html) and [a bit more CSC specific](https://docs.csc.fi/computing/containers/run-existing/).
+
+```
+singularity exec --bind $PWD:$PWD /projappl/project_2005590/containers/quast_5.0.2.sif quast.py -o quast_out kaiju_out_filtered.fasta -t 4
+```
+
 
 
 ## Sandbox
