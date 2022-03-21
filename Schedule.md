@@ -5,12 +5,12 @@
 | --- | --- |
 | 09:00-09:30 | **Jenni Hultman**: Introduction (including general structure of the course and group work)|
 | 09:30-09:45 | **Antti Karkman**: Basic usage of computing service at CSC |
-| 09:45-10:45 | **David Fewer**: Cyanobacteria|
-| 11:00-11:45 | **Antti Karkaman**: Sequence data |
+| 09:45-10:45 | **David Fewer**: Intoridction to the Cyanobacterial genomes analyzed during the course|
+| 11:00-11:45 | **Antti Karkman**: Introduction to the sequence data |
 | 11:45-12:00 | **Jenni Hultman**: Seq trimming and QC lecture |
 | 12:00-13:00 | **Lunch** |
 | 13:00-13:20 | **Jenni Hultman**: Assembly lecture |
-| 13:20-15:00 | **ALL**: Hands-on QC, trimming and assembly and MBDP coffee break at 14:00 [From reads to assemblies: working with INNUca pipeline](https://github.com/INNUENDOCON/MicrobialGenomeMetagenomeCourse/blob/master/MPM_workingwithINNUCA.md) |
+| 13:20-15:00 | **ALL**: Hands-on QC, trimming and assembly and MBDP coffee break at 14:00 |
 | 15:00-16:00 | **Students**: Student presentations|
 
 ## Tuesday - EE-building, ROOM
@@ -30,7 +30,7 @@
 | 09:30-10.30 | **Antti Karkaman**: Population genomics |
 | 10:30-12:00 | **ALL**: Population genomics hands-on |
 | 12:00-13:00 | **Lunch**: |
-| 13:00-15:00 | **ALL**: Population genomics hands-on cont'|
+| 13:00-15:00 | **ALL**: Population genomics hands-on cont' and MBDP coffee break at 14:00|
 | 15:00-16:00 | **Time for groupwork** |
 
 
@@ -50,4 +50,4 @@
 | 08:30-12:00 | **ALL**: Groupwork presentations|
 | 12:00-13:00 | **Lunch** |
 | 11:00-12:30 | **ALL**: Groupwork presentations|
-| 12:30-14:30 | **Q&A** & **Feedback**|
+| 12:30-15:30 | **Q&A** & **Feedback** and MBDP coffee break at 14:00|
