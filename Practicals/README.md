@@ -55,7 +55,7 @@ You always need to specify the accounting project (`-A`, `--account`). Otherwise
 
 ## QC and trimming for Illumina reads
 QC for the raw data takes few minutes, depending on the allocation.  
-Go to your working directory and make a folder called e.g. `FASTQC_RAW` for the QC reports.  
+Go to your working directory and make a folder called e.g. `fastqc_raw` for the QC reports.  
 
 QC does not require lot of memory and can be run on the interactive nodes using `sinteractive`.
 
@@ -97,9 +97,9 @@ echo $R2
 Run `fastQC` to the files stored in the RAWDATA folder. What does the `-o` and `-t` flags refer to?
 
 ```bash
-fastqc $R1 -o FASTQC_RAW/ -t 1
+fastqc $R1 -o fastqc_raw/ -t 1
 
-fastqc $R2 -o FASTQC_RAW/ -t 1
+fastqc $R2 -o fastqc_raw/ -t 1
 ```
 
 
@@ -127,12 +127,12 @@ You can find the answers from Cutadapt [manual](http://cutadapt.readthedocs.io).
 Before running the script, we need to create the directory where the trimmed data will be written:
 
 ```bash
-mkdir TRIMMED
+mkdir trimmed
 ```
 
 
 ```bash
-cutadapt -a CTGTCTCTTATA -A CTGTCTCTTATA -o TRIMMED/"$strain"_cut_1.fastq -p TRIMMED/"$strain"_cut_2.fastq $R1 $R2 --minimum-length 80 > cutadapt.log
+cutadapt -a CTGTCTCTTATA -A CTGTCTCTTATA -o trimmed/"$strain"_cut_1.fastq -p trimmed/"$strain"_cut_2.fastq $R1 $R2 --minimum-length 80 > cutadapt.log
 
 ```
 
@@ -150,7 +150,7 @@ Then make a new folder (`FASTQC`) for the QC files of the trimmed data and run f
 
 ```bash
 mkdir fastqc_out_trimmed
-fastqc *.fastq -o fastqc_out_trimmed/ -t 1
+fastqc trimmed/cd T *.fastq -o fastqc_out_trimmed/ -t 1
 ```
 
 
@@ -176,15 +176,15 @@ Run program using the previous trimmed reads:
 
 ```bash
 prinseq-lite.pl \
--fastq TRIMMED/"$strain"_cut_1.fastq \
--fastq2 TRIMMED/"$strain"_cut_2.fastq \
+-fastq trimmed/"$strain"_cut_1.fastq \
+-fastq2 trimmed/"$strain"_cut_2.fastq \
 -min_qual_mean 25 \
 -trim_left 10 \
 -trim_right 8 \
 -trim_qual_right 36 \
 -trim_qual_left 30 \
 -min_len 80 \
--out_good TRIMMED/"$strain"_pseq -log prinseq.log
+-out_good trimmed/"$strain"_pseq -log prinseq.log
 ```
 
 You can check the `prinseq.log` and run again FastQC on the Prinseq trimmed sequences and copy them to your computer. You can now compare the quality of these sequences with the raw and cutadapt trimmed sequences FastQC results. Did you find any difference?
@@ -205,8 +205,8 @@ To combine all the reports .zip in a new `combined_fastqc` folder with multiQC:
 ```bash
 mkdir combined_fastqc
 
-cp FASTQC_RAW/*zip combined_fastqc/
-cp TRIMMED/fastqc_out_trimmed/*zip combined_fastqc/
+cp fastqc_raw/*zip combined_fastqc/
+cp trimmed/fastqc_out_trimmed/*zip combined_fastqc/
 
 ```
 
