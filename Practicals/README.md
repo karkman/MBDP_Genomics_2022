@@ -199,6 +199,7 @@ fastqc "$strain"_pseq_*.fastq -o ../fastqc_out_trimmed/ -t 1
 ```
 
 
+### Optional - To compare raw and trimmed sequences using multiqc
 
 
 To combine all the reports .zip in a new `combined_fastqc` folder with multiQC:
@@ -242,26 +243,42 @@ source activate mbdp_genomics
 
 The nanopore data you will use can be found in the folder `/scratch/project_2005590/COURSE_FILES/RAWDATA_NANOPORE`
 
+This run will require more computing resources, so you can apply for more memory or run in sbatch:
+
+```bash
+sinteractive -A project_2005590 -m 45000
+```
+
 Generate graphs for visualization of reads quality and length distribution 
 
 ```bash
 NanoPlot -o nanoplot_out -t 4 -f png --fastq path-to/your_raw_nanopore_reads.fastq.gz
-nanoQC -o nanoQC_out path-to/your_raw_nanopore_reads.fastq.gz
 ```
 
-Check two plots inside the nanoplot output folder:
+Transfer to your computer and check two plots inside the nanoplot output folder:
 Reads quality distribution: `LengthvsQualityScatterPlot_kde.png`
 Reads length distribution: `Non_weightedLogTransformed_HistogramReadlength.png`
 
+```bash
+nanoQC -o nanoQC_out path-to/your_raw_nanopore_reads.fastq.gz
+```
+
 Using the Puhti interactive mode, check the file `nanoQC.html` inside the ouput folder of the nanoQC job.
-* How is the quality at the beginning and at the end of the reads? How many bases would cut from these regions?
+
+* How is the quality at the beginning and at the end of the reads? How many bases would you cut from these regions?
+
+
 
 ### Trimming and quality filtering of reads
 
 The following command will trim the first 30 bases and the last 20 bases of each read, exclude reads with a phred score below 12 and exclude reads with less than 1000 bp.
 
 ```bash
-gunzip -c raw.nanopore.328.fastq.gz | NanoFilt -q 12 -l 1000 --headcrop 30 --tailcrop 20 | gzip > nanopore.trimmed.fastq.gz
+mkdir trimmed_nanopore
+
+cd trimmed_nanopore
+
+gunzip -c /scratch/project_2005590/COURSE_FILES/RAWDATA_NANOPORE/raw.nanopore.328.fastq.gz | NanoFilt -q 12 -l 1000 --headcrop 30 --tailcrop 20 | gzip > nanopore.trimmed.fastq.gz
 ```
 
 ### Optional - Visualizing the trimmed data
