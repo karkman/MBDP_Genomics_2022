@@ -194,7 +194,7 @@ You can check the `prinseq.log` and run again FastQC on the Prinseq trimmed sequ
 ```bash
 cd trimmed/
 
-fastqc "$strain"_pseq_*.fastq -o fastqc_out_trimmed/ -t 1
+fastqc "$strain"_pseq_*.fastq -o ../fastqc_out_trimmed/ -t 1
 
 ```
 
