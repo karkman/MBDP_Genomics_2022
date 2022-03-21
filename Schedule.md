@@ -1,6 +1,6 @@
 # Schedule
 
-## Monday - EE-building, ROOM
+## Monday - EE-building, Walter-sali 
 | Time | Description|
 | --- | --- |
 | 09:00-09:30 | **Jenni Hultman**: Introduction (including general structure of the course and group work)|
@@ -13,7 +13,7 @@
 | 13:20-15:00 | **ALL**: Hands-on QC, trimming and assembly and MBDP coffee break at 14:00 |
 | 15:00-16:00 | **Students**: Student presentations|
 
-## Tuesday - EE-building, ROOM
+## Tuesday - EE-building, Walter-sali
 | Time | Description |
 | --- | --- |
 | 09:00-9:30 | **Endrews Delbaje**: Annotation lecture|
@@ -23,7 +23,7 @@
 | 15:00-16:00 | **Endrews Delbaje**:KBase tutorial |
 
 
-## Wednesday - EE-building, ROOM
+## Wednesday - EE-building, sh 11+12
 | Time | Description |
 | --- | --- |
 | 09:00-09:30 | **Antti Karkaman**: Introduction to Anvi'o|
@@ -34,7 +34,7 @@
 | 15:00-16:00 | **Time for groupwork** |
 
 
-## Thursday - EE-building, ROOM
+## Thursday - EE-building, Walter-sali
 | Time | Description |
 | --- | --- |
 | 08:30-10:45 | **David Fewer**: Secondary metabolite annotation|
@@ -44,7 +44,7 @@
 | 14:00-16:00 | **Time for groupwork** |
 
 
-## Friday - EE-building, ROOM
+## Friday - EE-building, Walter-sali
 | Time | Description |
 | --- | --- |
 | 08:30-12:00 | **ALL**: Groupwork presentations|
