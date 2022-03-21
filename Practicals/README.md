@@ -6,8 +6,9 @@ __TOC:__
 2. [Interactive use of Puhti](#interactive-use-of-puhti)
 3. [QC and trimming for Illumina reads](#qc-and-trimming-for-illumina-reads)
 4. [QC and trimming for Nanopore reads](#qc-and-trimming-for-nanopore-reads)
-5. [Hybrid genome assembly with Spades](#hybrid-genome-assembly-with-spades)
+5. [Genome assembly with Spades](#genome-assembly-with-spades)
 6. [Eliminate contaminant contigs with Kaiju](#eliminate-contaminant-contigs-with-kaiju)
+7. [Calculate the genome coverage](#calculate-the-genome-coverage)
 
 
 
@@ -374,7 +375,39 @@ More about Singularity: [More general introduction](https://sylabs.io/guides/3.5
 singularity exec --bind $PWD:$PWD /projappl/project_2005590/containers/quast_5.0.2.sif quast.py -o quast_out kaiju_out_filtered.fasta -t 4
 ```
 
+## Calculate the genome coverage
 
+To calculate the genome coverage, all the reads used for the assembly must be mapped to the final genome. For that, we can use three programs: Bowtie2 to map the reads; Samtools to sort and make an index of the mapped reads; and bedtools to make the calculation.
+
+The entire workflow can take a long time, so the bedtools output with the sequencing depth for each base in the genome is available for each cyanobacterial strain in `/scratch/project_2005590/COURSE_FILES/RESULTS/coverage_[strain_number]/CoverageTotal.bedgraph`.
+
+You can check the commands used in the workflow to generate this file in the script in: `/scratch/project_2005590/COURSE_FILES/SCRIPTS/genome_coverage_workflow.sh`.
+
+
+You can visualize the contents of the file `CoverageTotal.bedgraph` using the command `head` to show the first few lines.
+
+The first 10 lines of `CoverageTotal.bedgraph` for the strain 328 as an example:
+```bash
+NODE_2_length_2022818_cov_20.647969   0   1   19
+NODE_2_length_2022818_cov_20.647969   1   2   31
+NODE_2_length_2022818_cov_20.647969   2   3   53
+NODE_2_length_2022818_cov_20.647969   3   4   57
+NODE_2_length_2022818_cov_20.647969   4   6   60
+NODE_2_length_2022818_cov_20.647969   6   8   62
+NODE_2_length_2022818_cov_20.647969   8   9   69
+NODE_2_length_2022818_cov_20.647969   9   11  73
+NODE_2_length_2022818_cov_20.647969   11  12  74
+NODE_2_length_2022818_cov_20.647969   12  13  76
+```
+The first column refers to the contig name, the second and third column refers to the base position, and the fourth column is the sequencing depth of the base.
+
+In order to calculate the final genome coverage we must calculate the average sequencing depth of all the bases in the genome. We can achieve this by using `awk`.
+
+This command will sum all the numbers in the fourth column of the file `CoverageTotal.bedgraph` and divide by the total numbers of lines (number of bases), giving the average number. The final result will be printed in your screen.
+
+```bash
+cat CoverageTotal.bedgraph | awk '{total+=$4} END {print total/NR}'
+```
 
 ## Sandbox
 Place to store some scratch code while testing.
