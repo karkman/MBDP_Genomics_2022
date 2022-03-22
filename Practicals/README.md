@@ -536,3 +536,58 @@ singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
                                     anvi-gen-phylogenomic-tree \
                                         -f single-copy-core-genes.fa  \
                                         -o SCG.tre
+
+
+```
+
+
+
+
+
+## Detection of secondary metabolites biosynthesis gene clusters
+
+Biosynthetic genes putatively involved in the synthesis of secondary metabolites can identified using `antiSMASH` 
+
+Got to `https://antismash.secondarymetabolites.org/#!/start`. You can load the assembled genome you obtained and turn on all the extra features.
+
+When the analysis is ready, you may be able to answer the following questions:
+
+1. How many secondary metabolites biosynthetic gene clusters (BGC) were detected?
+2. Which different types of BGC were detected and qhat is the difference among these types?
+3. Do you think your strain produce all these metabolites? Why?
+
+
+## Comparison of secondary metabolites biosynthesis gene clusters
+
+Biosynthetic genes clusters can be compared using `BiG-SCAPE` (Biosynthetic Gene Similarity Clustering and Prospecting Engine) and `CORASON` (CORe Analysis of Syntenic Orthologs to prioritize Natural Product-Biosynthetic Gene Cluster)  https://bigscape-corason.secondarymetabolites.org/tutorial/index.html
+
+
+You can run BiG-SCAPE/CORASON in your folder, using the results obtained from antiSMASH. The .gbk files from the three studied strains and selected reference strains from NCBI are available here: `/scratch/project_2005590/COURSE_FILES/BIGSCAPE/combinedGBK`
+
+You need to load bigscape using a Conda environment:
+
+```bash
+export PROJAPPL=/projappl/project_2005590
+module load bioconda/3
+source activate bigscape
+```
+
+
+```bash
+sinteractive -A project_2005590
+```
+
+Now you can run BiG-SCAPE/CORASON in your user folder:
+
+```bash
+mkdir bigscape
+cd bigscape/
+
+python /scratch/project_2005590/shishido/BIGSCAPE/bigscape.py -c 8 -i /scratch/project_2005590/COURSE_FILES/BIGSCAPE/combinedGBK --pfam_dir /scratch/project_2005590/COURSE_FILES/BIGSCAPE/Pfam_database -o bigscape_auto --anchorfile /scratch/project_2005590/COURSE_FILES/BIGSCAPE/anchor_domains.txt --mode auto --hybrids-off --mibig  --cutoffs 0.40 0.50 0.60
+```
+
+Take a look what it means each parameter used: https://git.wageningenur.nl/medema-group/BiG-SCAPE/-/wikis/home
+
+Once the run is finished, you may transfer the folder to your own computer and observe the results.
+
+Can you find the geosmin and/or 2-methylisoborneol biosynthetic gene clusters? 
