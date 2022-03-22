@@ -5,7 +5,7 @@
 | --- | --- |
 | 09:00-09:30 | **Jenni Hultman**: Introduction (including general structure of the course and group work)|
 | 09:30-09:45 | **Antti Karkman**: Basic usage of computing service at CSC |
-| 09:45-10:45 | **David Fewer**: Intoridction to the Cyanobacterial genomes analyzed during the course|
+| 09:45-10:45 | **David Fewer**: Introduction to the Cyanobacterial genomes analyzed during the course|
 | 11:00-11:45 | **Antti Karkman**: Introduction to the sequence data |
 | 11:45-12:00 | **Jenni Hultman**: Seq trimming and QC lecture |
 | 12:00-13:00 | **Lunch** |
@@ -17,7 +17,7 @@
 | Time | Description |
 | --- | --- |
 | 08:30-9:30 | **Endrews Delbaje**: Annotation lecture|
-| 9:30-12:00 | **Endrews Delbaje OR Tania?**: Assmebly QC lecture and hands-on| 
+| 9:30-12:00 | **Endrews Delbaje OR Tania Shishido?**: Assembly QC lecture and hands-on| 
 | 12:00-13:00 | **lunch** |
 | 13:00-15:00 | **Endrews Delbaje**: Annotation hands-on |
 | 15:00-16:00 | **Endrews Delbaje**:KBase tutorial |
