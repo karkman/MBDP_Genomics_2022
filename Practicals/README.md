@@ -351,7 +351,7 @@ To run Kaiju you can use the script in `/scratch/project_2005590/COURSE_FILES/ru
 sbatch /scratch/project_2005590/COURSE_FILES/run_kaiju.sh -i spades_hybrid_out/scaffolds.fasta -o kaiju_out
 ```
 
-You can check the status of your job with:  **didn't work
+You can check the status of your job with:  
 
 ```bash
 squeue -l -u $USER
