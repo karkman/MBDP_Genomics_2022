@@ -14,6 +14,7 @@ __TOC:__
 10. [Name the strain](#name-the-strain)
 11. [Pangenomics](#pangenomics-with-anvio)
 12. [Detection  of secondary  metabolites](#detection-of-secondary-metabolites-biosynthesis-gene-clusters)
+13. [Comparison of secondary metabolites biosynthesis gene clusters](#comparison-of-secondary-metabolites-biosynthesis-gene-clusters)
 
 
 
