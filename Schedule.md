@@ -20,9 +20,9 @@
 | --- | --- |
 | 8:30-09:00 | **Tania Shishido**: Assembly QC lecture |
 | 9:00-09:30 | **Endrews Delbaje**: Assembly QC hands-on|
-| 9:30-10:00 | **Endrews Delbaje**: Annotation lecture|
-| 10:00-11:00 | **Endrews Delbaje**: Annotation hands-on|
-| 11:00-12:00 | **Endrews Delbaje**: Kaiju, CheckM|
+| 9:30-10:00 | **Endrews Delbaje**: Cleaning the genome|
+| 10:00-10:30 | **Endrews Delbaje**: Annotation lecture|
+| 10:30-12:00 | **Endrews Delbaje**: Annotation hands-on|
 | 12:00-13:00 | **lunch** |
 | 13:00-16:00 | **Endrews Delbaje**:KBase tutorial and hands-on|
 
