@@ -28,8 +28,8 @@
 ## Wednesday - EE-building, sh 11+12
 | Time | Description |
 | --- | --- |
-| 08:30-09:30 | **Antti Karkaman**: Introduction to Anvi'o|
-| 09:30-10.30 | **Antti Karkaman**: Population genomics |
+| 08:30-09:30 | **Antti Karkman**: Introduction to Anvi'o|
+| 09:30-10.30 | **Antti Karkman**: Population genomics |
 | 10:30-12:00 | **ALL**: Population genomics hands-on |
 | 12:00-13:00 | **Lunch**: |
 | 13:00-15:00 | **ALL**: Population genomics hands-on cont' and MBDP coffee break at 14:00|
