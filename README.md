@@ -26,7 +26,10 @@ Microbial community structure and diversity, and population structure are fundam
 
 The course will be from Monday 28th of March to Friday 1st of April in EE-building, Viikki.  
 
-[**-- COURSE SCHEDULE --**](Schedule.md)
+[**-- Link to COURSE SCHEDULE --**](Schedule.md)  
+
+[**-- Link to PRACTICALS --**](Practicals/README.md)
+
 
 ## Target group
 This course is targeted at PhD and MSc students who are interested in performing bacterial genome analyses

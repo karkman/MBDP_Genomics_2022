@@ -1,5 +1,4 @@
 # Practicals
-All material for practical parts in this folder
 
 __TOC:__
 1. [Setting up](#setting-up-the-course-folders)
