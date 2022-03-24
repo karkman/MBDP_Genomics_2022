@@ -445,6 +445,101 @@ singularity exec --bind $GTDBTK_DATA_PATH:$GTDBTK_DATA_PATH,$PWD:$PWD,$TMPDIR:/t
 ## Pangenomics with Anvi'o
 
 
+We will run the whole anvi'o part interactively. So again, allocate a computing node with enough memory (>40G).  
+```
+mkdir pangenomics
+cd pangenomics
+
+GENOME_DIR=ABSOLUTE/PATH/TO/GENOME/DIR
+
+singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes ~/bin/anvio_7.sif \
+          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_193.fasta -r reformat_193_report.txt /genomes/GENOME1.fasta
+
+singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes ~/bin/anvio_7.sif \
+          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_327_2.fasta -r reformat_327_2_report.txt /genomes/GENOME2.fasta
+
+singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes ~/bin/anvio_7.sif \
+          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_328.fasta -r reformat_328_report.txt /genomes/GENOME3.fasta
+
+cp /scratch/project_2005590/COURSE_FILES/closest_oscillatoriales_genomes/*.fasta.gz ./
+gunzip *.gz
+
+module load biokit
+for strain in $(ls *.fasta); do prokka --outdir ${strain%.fasta} --prefix ${strain%.fasta} $strain; done
+
+# process genbank files
+for genome in $(ls */*gbf)
+do
+    singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+                                        anvi-script-process-genbank \
+                                            -i $genome -O ${genome%/*} \
+                                            --annotation-source prodigal \
+                                            --annotation-version v2.6.3
+done
+
+
+# make a fasta.txt file from these for pangenomics workflow
+
+for strain in $(ls *-contigs.fa)
+do
+    echo -e ${strain%-contigs.fa}"\t"$strain"\t"${strain%-contigs.fa}"-external-gene-calls.txt\t"${strain%-contigs.fa}"-external-functions.txt"
+done > fasta.txt
+
+# afterwards add headers to fasta.txt file in any text editor, separated with tab
+##  name  path	external_gene_calls	gene_functional_annotation
+
+# And make a config.json file:
+{
+    "workflow_name": "pangenomics",
+    "config_version": "2",
+    "project_name": "Oscillatoriales_pangenome",
+    "external_genomes": "external-genomes.txt",
+    "fasta_txt": "fasta.txt",
+    "anvi_gen_contigs_database": {
+        "--project-name": "{group}",
+        "--description": "",
+        "--skip-gene-calling": "",
+        "--ignore-internal-stop-codons": true,
+        "--skip-mindful-splitting": "",
+        "--contigs-fasta": "",
+        "--split-length": "",
+        "--kmer-size": "",
+        "--skip-predict-frame": "",
+        "--prodigal-translation-table": "",
+        "threads": ""
+    },
+    "output_dirs": {
+        "FASTA_DIR": "01_FASTA_contigs_workflow",
+        "CONTIGS_DIR": "02_CONTIGS_contigs_workflow",
+        "LOGS_DIR": "00_LOGS_pan_workflow"
+    }
+}
+
+singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif anvi-run-workflow -w pangenomics -c config.json
+
+export ANVIOPORT=PORT
+singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+                                    anvi-display-pan \
+                                        -g Oscillatoriales_pangenome-GENOMES.db \
+                                        -p Oscillatoriales_pangenome-PAN.db \
+                                        --server-only -P $ANVIOPORT
+
+singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+                                    anvi-get-sequences-for-gene-clusters \
+                                        -p 03_PAN/Oscillatoriales_pangenome-PAN.db \
+                                        -g 03_PAN/Oscillatoriales_pangenome-GENOMES.db \
+                                        -C default -b SCG \
+                                        --concatenate-gene-clusters \
+                                        -o single-copy-core-genes.fa                               
+
+singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+                                    anvi-gen-phylogenomic-tree \
+                                        -f single-copy-core-genes.fa  \
+                                        -o SCG.tre
+
+
+```
+
 
 ## Sandbox
 Place to store some scratch code while testing.
