@@ -38,7 +38,7 @@ You always need to specify the accounting project (`-A`, `--account`). Otherwise
 
 | Option | Function | Default | Max |  
 | --     | --       | --      | --  |  
-| -i, --interactive | set resources interactively |  |  |  
+| -i, --interactive | Set resources interactively |  |  |  
 | -t,  --time | Reservation in minutes or in format d-hh:mm:ss | 24:00:00 | 7-00:00:00 |
 | -m, --mem | Memory in Mb       | 2000     | 76000  |  
 | -j, --jobname |Job name       | interactive     |   |  
@@ -334,6 +334,7 @@ singularity exec --bind $PWD:$PWD ~/bin/quast.sif quast.py -o quast_out */contig
 
 ### basecalling
 ```
+
 ~/projappl/ont-guppy/bin/guppy_basecaller -i fast5_pass/ -s BASECALLED/ -c ~/projappl/ont-guppy/data/dna_r9.4.1_450bps_hac.cfg --device auto --min_qscore 10
 cat BASECALLED/pass/*.fastq |gzip > BASECALLED/strain_328_nanopore.fastq.gz
 ```
