@@ -7,11 +7,12 @@
 | 10:30-10:45 | **Antti Karkman**: Basic usage of computing service at CSC |
 | 10:45-11:30 | **Antti Karkman**: Basic usage of computing service at CSC - Hands-on |
 | 11:30-12:00 | **David Fewer**: Introduction to the Cyanobacterial genomes analyzed during the course|
-| 11:00-11:45 | **Antti Karkman**: Introduction to the sequence data |
-| 11:45-12:00 | **Jenni Hultman**: Seq trimming and QC lecture |
 | 12:00-13:00 | **Lunch** |
-| 13:00-13:20 | **Jenni Hultman**: Assembly lecture |
-| 13:20-15:00 | **ALL**: Hands-on [QC, trimming and assembly](Practicals/README.md#qc-and-trimming-for-illumina-reads) and MBDP coffee break at 14:00 |
+| 13:00-13:15 | **Antti Karkman**: Introduction to the sequence data |
+| 13:15-13:30 | **Jenni Hultman**: Seq trimming and QC lecture |
+| 13:30-15:00 | **ALL**: Hands-on [QC, trimming and assembly](Practicals/README.md#qc-and-trimming-for-illumina-reads) and MBDP coffee break at 14:00 |
+| 15:00-15:15 | **Jenni Hultman**: Assembly lecture |
+| 15:00-16:00 | **Jenni Hultman**: Assembly hands-on |
 | 15:00-16:00 | **Students**: Student presentations|
 
 ## Tuesday - EE-building, Walter-sali
