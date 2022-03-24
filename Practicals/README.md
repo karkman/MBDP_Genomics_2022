@@ -442,7 +442,7 @@ This will use a lot of memory (> 200G), so allocate a new computing node for thi
 #############  (THIS HAS BEEN DONE ALREADY)  #########################
 
 # run gtdbtk
-export GTDBTK_DATA_PATH=/scratch/project_2005590 /databases/GTDB/release202/
+export GTDBTK_DATA_PATH=/scratch/project_2005590/databases/GTDB/release202/
 singularity exec --bind $GTDBTK_DATA_PATH:$GTDBTK_DATA_PATH,$PWD:$PWD,$TMPDIR:/tmp  /projappl/project_2005590/containers/gtdbtk_1.7.0.sif \
               gtdbtk classify_wf -x fasta --genome_dir PATH/TO/GENOME/FOLDER --out_dir OUTPUT/FOLDER --cpus 4 --tmpdir gtdb_test
 ```
