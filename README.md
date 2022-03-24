@@ -1,4 +1,4 @@
-# MBDP_Genomics_2022
+# MBDP Genomics course spring 2022
 
 #######################################################  
 __notes for course pages organisation (will be removed)__

@@ -1,6 +1,6 @@
 # Practicals
 
-__TOC:__
+__Table of Contents:__
 1. [Setting up](#setting-up-the-course-folders)
 2. [Interactive use of Puhti](#interactive-use-of-puhti)
 3. [QC and trimming for Illumina reads](#qc-and-trimming-for-illumina-reads)
