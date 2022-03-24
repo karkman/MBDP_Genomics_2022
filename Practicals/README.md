@@ -226,7 +226,7 @@ multiqc . --interactive
 
 To leave the interactive node, type `exit`.  
 
-You can copy the file `multiqc_report.html` to your computer and open it in a webbrowser. Can you see any difference amon the raw and trimmed reads?
+You can copy the file `multiqc_report.html` to your computer and open it in a web browser. Can you see any difference among the raw and trimmed reads?
 
 
 ## QC and trimming for Nanopore reads
@@ -250,7 +250,7 @@ This run will require more computing resources, so you can apply for more memory
 sinteractive -A project_2005590 -m 45000
 ```
 
-Generate graphs for visualization of reads quality and length distribution 
+Generate graphs for visualization of reads quality and length distribution
 
 ```bash
 NanoPlot -o nanoplot_out -t 4 -f png --fastq path-to/your_raw_nanopore_reads.fastq.gz
@@ -300,7 +300,7 @@ Remember also the accounting project, `project_2005590`.
 sinteractive --account --time --mem --cores
 
 
-# Deactivate the current virtual environment and reset the modules before loanding Spades
+# Deactivate the current virtual environment and reset the modules before loading Spades
 source deactivate mbdp_genomics
 module purge
 
@@ -319,7 +319,7 @@ R2=trimmed/"$strain"_pseq_2.fastq
 
 ### Run Spades
 
-We will use the trimmed Illumina and Nanopore sequences to assemble the cyanobacteria genomes. Check the commands used using `spades.py -h` 
+We will use the trimmed Illumina and Nanopore sequences to assemble the cyanobacteria genomes. Check the commands used using `spades.py -h`
 
 ```bash
 spades.py --isolate --nanopore nanopore.trimmed.fastq.gz -1 $R1 -2 $R2 -o spades_hybrid_out -t 8
@@ -409,6 +409,43 @@ This command will sum all the numbers in the fourth column of the file `Coverage
 cat CoverageTotal.bedgraph | awk '{total+=$4} END {print total/NR}'
 ```
 
+## Genome completeness and contamination
+
+Now we have calculated different metrics for our genomes, but they donät really tell anything about the "real" quality of our genome.  
+We will use checkM to calculate the completeness and possible contamination in our genomes.  
+Allocate some resources (>40G memory & 4 threads) and run checkM (v. 1.1.3.) from a singularity container.  
+
+Before running checkM, it might be good to put all genomes to one folder.
+
+```
+singularity exec --bind $PWD:$PWD,$TMPDIR:/tmp /projappl/project_2005590/containers/checkM_1.1.3.sif \
+              checkm lineage_wf -x fasta PATH/TO/GENOME/FOLDER OUTPUT/FOLDER -t 4 --tmpdir /tmp
+```
+
+## Name the strain
+
+After we know the completeness and the amount of possible contamination in our assembly, next thing is to give a name to our strain. In other words, what species did we sequence.  
+We will use a tool called GTDB-tk to give some taxonomy to our genomes.
+
+This will use a lot of memory (> 200G), so allocate a new computing node for this.
+
+```
+#############  (THIS HAS BEEN DONE ALREADY)  #########################
+## download gtdb database
+# wget https://data.ace.uq.edu.au/public/gtdb/data/releases/latest/auxillary_files/gtdbtk_data.tar.gz
+# tar -xzf gtdbtk_data.tar.gz
+#############  (THIS HAS BEEN DONE ALREADY)  #########################
+
+# run gtdbtk
+export GTDBTK_DATA_PATH=/scratch/project_2005590 /databases/GTDB/release202/
+singularity exec --bind $GTDBTK_DATA_PATH:$GTDBTK_DATA_PATH,$PWD:$PWD,$TMPDIR:/tmp  /projappl/project_2005590/containers/gtdbtk_1.7.0.sif \
+              gtdbtk classify_wf -x fasta --genome_dir PATH/TO/GENOME/FOLDER --out_dir OUTPUT/FOLDER --cpus 4 --tmpdir gtdb_test
+```
+
+## Pangenomics with Anvi'o
+
+
+
 ## Sandbox
 Place to store some scratch code while testing.
 
@@ -432,11 +469,6 @@ singularity exec --bind $GTDBTK_DATA_PATH:$GTDBTK_DATA_PATH,$PWD:$PWD  /projappl
               gtdbtk classify_wf -x fasta --genome_dir checkM_test/ --out_dir gtdb_test --cpus 4  --tmpdir gtdb_test
 ```
 
-
-### quast
-```
-singularity exec --bind $PWD:$PWD ~/bin/quast.sif quast.py -o quast_out */contigs.fasta -t 4
-```
 
 ### basecalling
 ```
@@ -547,7 +579,7 @@ singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
 
 ## Detection of secondary metabolites biosynthesis gene clusters
 
-Biosynthetic genes putatively involved in the synthesis of secondary metabolites can identified using `antiSMASH` 
+Biosynthetic genes putatively involved in the synthesis of secondary metabolites can identified using `antiSMASH`
 
 Got to `https://antismash.secondarymetabolites.org/#!/start`. You can load the assembled genome you obtained and turn on all the extra features.
 
@@ -591,4 +623,4 @@ Take a look what it means each parameter used: https://git.wageningenur.nl/medem
 
 Once the run is finished, you may transfer the folder to your own computer and observe the results.
 
-Can you find the geosmin and/or 2-methylisoborneol biosynthetic gene clusters? 
+Can you find the geosmin and/or 2-methylisoborneol biosynthetic gene clusters?
