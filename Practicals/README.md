@@ -13,7 +13,7 @@ __TOC:__
 9. [Genome completeness and contamination](#genome-completeness-and-contamination)
 10. [Name the strain](#name-the-strain)
 11. [Pangenomics](#pangenomics-with-anvio)
-12. [Detection  of secondary  metabolites](#detection-of-secondary-metabolites-biosynthesis-gene-clusters)
+12. [Detection  of secondary  metabolites biosynthesis gene clusters](#detection-of-secondary-metabolites-biosynthesis-gene-clusters)
 13. [Comparison of secondary metabolites biosynthesis gene clusters](#comparison-of-secondary-metabolites-biosynthesis-gene-clusters)
 
 
