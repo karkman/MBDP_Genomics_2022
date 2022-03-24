@@ -10,10 +10,10 @@ __TOC:__
 6. [Eliminate contaminant contigs with Kaiju](#eliminate-contaminant-contigs-with-kaiju)
 7. [Assembly QC](#assembly-qc)
 8. [Calculate the genome coverage](#calculate-the-genome-coverage)
-9. [Genome completeness and contamination](#genome-completeness-and-contaminnatio)
+9. [Genome completeness and contamination](#genome-completeness-and-contamination)
 10. [Name the strain](#name-the-strain)
 11. [Pangenomics](#pangenomics-with-anvio)
-12. [Detection  of secondary  metabolites](#detection-of-secondary-metabolites-biosynthesis-gene-cluster)
+12. [Detection  of secondary  metabolites](#detection-of-secondary-metabolites-biosynthesis-gene-clusters)
 
 
 
