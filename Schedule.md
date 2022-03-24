@@ -18,11 +18,13 @@
 ## Tuesday - EE-building, Walter-sali
 | Time | Description |
 | --- | --- |
-| 08:30-9:30 | **Endrews Delbaje**: Annotation lecture|
-| 9:30-12:00 | **Endrews Delbaje OR Tania Shishido?**: Assembly QC lecture and hands-on|
+| 8:30-09:00 | **Tania Shishido**: Assembly QC lecture |
+| 9:00-09:30 | **Endrews Delbaje**: Assembly QC hands-on|
+| 9:30-10:00 | **Endrews Delbaje**: Annotation lecture|
+| 10:00-11:00 | **Endrews Delbaje**: Annotation hands-on|
+| 11:00-12:00 | **Endrews Delbaje**: Kaiju, CheckM|
 | 12:00-13:00 | **lunch** |
-| 13:00-15:00 | **Endrews Delbaje**: Annotation hands-on |
-| 15:00-16:00 | **Endrews Delbaje**:KBase tutorial |
+| 13:00-16:00 | **Endrews Delbaje**:KBase tutorial and hands-on|
 
 
 ## Wednesday - EE-building, sh 11+12
