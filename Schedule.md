@@ -5,7 +5,7 @@
 | --- | --- |
 | 10:00-10:30 | **Jenni Hultman**: Introduction (including general structure of the course and group work)|
 | 10:30-10:45 | **Antti Karkman**: Basic usage of computing service at CSC |
-| 10:45-11:30 | **Antti Karkman**: [Basic usage of computing service at CSC](Practicals/README.md#setting-up-the-course-folder) |
+| 10:45-11:30 | **Antti Karkman**: [Basic usage of computing service at CSC](Practicals/README.md#setting-up-the-course-folders) |
 | 11:30-12:00 | **David Fewer**: Introduction to the Cyanobacterial genomes analyzed during the course|
 | 12:00-13:00 | **Lunch** |
 | 13:00-13:15 | **Antti Karkman**: Introduction to the sequence data |
