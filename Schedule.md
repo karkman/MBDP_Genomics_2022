@@ -1,6 +1,6 @@
 # Schedule
 
-## Monday - EE-building, Walter-sali 
+## Monday - EE-building, Walter-sali
 | Time | Description|
 | --- | --- |
 | 09:00-09:30 | **Jenni Hultman**: Introduction (including general structure of the course and group work)|
@@ -10,14 +10,14 @@
 | 11:45-12:00 | **Jenni Hultman**: Seq trimming and QC lecture |
 | 12:00-13:00 | **Lunch** |
 | 13:00-13:20 | **Jenni Hultman**: Assembly lecture |
-| 13:20-15:00 | **ALL**: Hands-on QC, trimming and assembly and MBDP coffee break at 14:00 |
+| 13:20-15:00 | **ALL**: Hands-on [QC, trimming and assembly](Practicals/README.md#qc-and-trimming-for-illumina-reads) and MBDP coffee break at 14:00 |
 | 15:00-16:00 | **Students**: Student presentations|
 
 ## Tuesday - EE-building, Walter-sali
 | Time | Description |
 | --- | --- |
 | 08:30-9:30 | **Endrews Delbaje**: Annotation lecture|
-| 9:30-12:00 | **Endrews Delbaje OR Tania Shishido?**: Assembly QC lecture and hands-on| 
+| 9:30-12:00 | **Endrews Delbaje OR Tania Shishido?**: Assembly QC lecture and hands-on|
 | 12:00-13:00 | **lunch** |
 | 13:00-15:00 | **Endrews Delbaje**: Annotation hands-on |
 | 15:00-16:00 | **Endrews Delbaje**:KBase tutorial |
