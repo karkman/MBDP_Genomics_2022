@@ -3,8 +3,9 @@
 ## Monday - EE-building, Walter-sali
 | Time | Description|
 | --- | --- |
-| 09:00-09:30 | **Jenni Hultman**: Introduction (including general structure of the course and group work)|
-| 09:30-09:45 | **Antti Karkman**: Basic usage of computing service at CSC |
+| 10:00-10:30 | **Jenni Hultman**: Introduction (including general structure of the course and group work)|
+| 10:30-11:00 | **Antti Karkman**: Basic usage of computing service at CSC |
+| 11:00-11:45 | **Antti Karkman**: Basic usage of computing service at CSC - Hands-on |
 | 09:45-10:45 | **David Fewer**: Introduction to the Cyanobacterial genomes analyzed during the course|
 | 11:00-11:45 | **Antti Karkman**: Introduction to the sequence data |
 | 11:45-12:00 | **Jenni Hultman**: Seq trimming and QC lecture |
