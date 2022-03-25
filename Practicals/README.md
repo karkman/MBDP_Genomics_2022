@@ -484,7 +484,7 @@ for genome in $(ls *.gbf)
 do
     singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
                                         anvi-script-process-genbank \
-                                            -i $genome -O ${genome%/*} \
+                                            -i $genome -O ${genome%.gbf} \
                                             --annotation-source prodigal \
                                             --annotation-version v2.6.3
 done
@@ -523,16 +523,12 @@ done > fasta.txt
     },
     "anvi_pan_genome": {
       "threads": "8"
-    },
-    "output_dirs": {
-        "FASTA_DIR": "01_FASTA_contigs_workflow",
-        "CONTIGS_DIR": "02_CONTIGS_contigs_workflow",
-        "LOGS_DIR": "00_LOGS_pan_workflow"
     }
 }
 
 singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif anvi-run-workflow -w pangenomics -c config.json
 
+cd 03_PAN
 export ANVIOPORT=PORT
 singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
                                     anvi-display-pan \
