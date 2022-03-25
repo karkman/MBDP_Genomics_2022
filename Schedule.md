@@ -8,7 +8,7 @@
 | 10:45-11:30 | **Antti Karkman**: [Basic usage of computing service at CSC](Practicals/README.md#setting-up-the-course-folders) |
 | 11:30-12:00 | **David Fewer**: Introduction to the Cyanobacterial genomes analyzed during the course|
 | 12:00-13:00 | **Lunch** |
-| 13:00-13:15 | **Antti Karkman**: Introduction to the sequence data |
+| 13:00-13:15 | **Antti Karkman**: [Sequencing 101](Lectures/Sequencing101.pdf) |
 | 13:15-13:30 | **Jenni Hultman**: Seq trimming and QC lecture |
 | 13:30-15:00 | **ALL**: Hands-on [QC, trimming and assembly](Practicals/README.md#qc-and-trimming-for-illumina-reads) and MBDP coffee break at 14:00 |
 | 15:00-15:15 | **Jenni Hultman**: Assembly lecture |

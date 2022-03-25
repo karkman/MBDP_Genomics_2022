@@ -443,14 +443,17 @@ This will use a lot of memory (> 200G), so allocate a new computing node for thi
 
 # run gtdbtk
 export GTDBTK_DATA_PATH=/scratch/project_2005590/databases/GTDB/release202/
-singularity exec --bind $GTDBTK_DATA_PATH:$GTDBTK_DATA_PATH,$PWD:$PWD,$TMPDIR:/tmp  /projappl/project_2005590/containers/gtdbtk_1.7.0.sif \
-              gtdbtk classify_wf -x fasta --genome_dir PATH/TO/GENOME/FOLDER --out_dir OUTPUT/FOLDER --cpus 4 --tmpdir gtdb_test
+
+singularity exec --bind $GTDBTK_DATA_PATH:$GTDBTK_DATA_PATH,$PWD:$PWD,$TMPDIR:/tmp  \
+                    /projappl/project_2005590/containers/gtdbtk_1.7.0.sif \
+                    gtdbtk classify_wf -x fasta --genome_dir PATH/TO/GENOME/FOLDER \
+                    --out_dir OUTPUT/FOLDER --cpus 4 --tmpdir gtdb_test
 ```
 
 ## Pangenomics with Anvi'o
 
 
-We will run the whole anvi'o part interactively. So again, allocate a computing node with enough memory (>40G).  
+We will run the whole anvi'o part interactively. So again, allocate a computing node with enough memory (>40G) and 8 threads.  
 ```
 mkdir pangenomics
 cd pangenomics
@@ -458,22 +461,26 @@ cd pangenomics
 GENOME_DIR=ABSOLUTE/PATH/TO/GENOME/DIR
 
 singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes ~/bin/anvio_7.sif \
-          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_193.fasta -r reformat_193_report.txt /genomes/GENOME1.fasta
+          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_193.fasta \
+          -r reformat_193_report.txt /genomes/GENOME1.fasta
 
 singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes ~/bin/anvio_7.sif \
-          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_327_2.fasta -r reformat_327_2_report.txt /genomes/GENOME2.fasta
+          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_327_2.fasta \
+          -r reformat_327_2_report.txt /genomes/GENOME2.fasta
 
 singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes ~/bin/anvio_7.sif \
-          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_328.fasta -r reformat_328_report.txt /genomes/GENOME3.fasta
+          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_328.fasta \
+          -r reformat_328_report.txt /genomes/GENOME3.fasta
 
-cp /scratch/project_2005590/COURSE_FILES/closest_oscillatoriales_genomes/*.fasta.gz ./
-gunzip *.gz
+# copy reference genomes to your own folder
+cp /scratch/project_2005590/COURSE_FILES/closest_oscillatoriales_genomes/*.gbf ./
 
+# annotate
 module load biokit
-for strain in $(ls *.fasta); do prokka --outdir ${strain%.fasta} --prefix ${strain%.fasta} $strain; done
+for strain in $(ls *.fasta); do prokka --cpus 8 --outdir ./ --prefix ${strain%.fasta} $strain; done
 
 # process genbank files
-for genome in $(ls */*gbf)
+for genome in $(ls *.gbf)
 do
     singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
                                         anvi-script-process-genbank \
@@ -497,6 +504,7 @@ done > fasta.txt
 {
     "workflow_name": "pangenomics",
     "config_version": "2",
+    "max_threads": "8",
     "project_name": "Oscillatoriales_pangenome",
     "external_genomes": "external-genomes.txt",
     "fasta_txt": "fasta.txt",
@@ -512,6 +520,9 @@ done > fasta.txt
         "--skip-predict-frame": "",
         "--prodigal-translation-table": "",
         "threads": ""
+    },
+    "anvi_pan_genome": {
+      "threads": "8"
     },
     "output_dirs": {
         "FASTA_DIR": "01_FASTA_contigs_workflow",
