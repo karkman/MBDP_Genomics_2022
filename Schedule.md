@@ -41,11 +41,12 @@
 ## Thursday - EE-building, Walter-sali
 | Time | Description |
 | --- | --- |
-| 08:30-10:45 | **David Fewer**: Secondary metabolite annotation|
-| 08:30-10:45 | **David Fewer**: Secondary metabolite annotation hands-on|
+| 08:30-10:45 | **Time for groupwork** |
+| 10:00-10:30 | **David Fewer**: Secondary metabolite lecture|
+| 10:30-12:00 | **David Fewer**: Secondary metabolite hands-on: antiSMASH and BiG-SCAPE/CORASON|
 | 12:00-13:00 | **Lunch** |
-| 13:00-14:00 | **Something from Fewer group** Anti-smash |
-| 14:00-16:00 | **Time for groupwork** |
+| 13:00-14:00 | **Something from Fewer group** Secondary metabolite hands-on: BiG-SCAPE/CORASON |
+| 14:30-16:00 | **Time for groupwork** |
 
 
 ## Friday - EE-building, Walter-sali
