@@ -18,7 +18,7 @@
 ## Tuesday - EE-building, Walter-sali
 | Time | Description |
 | --- | --- |
-| 8:30-09:00 | **Tania Shishido**: Assembly QC lecture |
+| 8:30-09:00 | **Tania Shishido Joutsen**: Assembly QC lecture |
 | 9:00-09:30 | **Endrews Delbaje**: Assembly QC hands-on|
 | 9:30-10:00 | **Endrews Delbaje**: Cleaning the genome|
 | 10:00-10:30 | **Endrews Delbaje**: Annotation lecture|
@@ -43,9 +43,9 @@
 | --- | --- |
 | 08:30-10:45 | **Time for groupwork** |
 | 10:00-10:30 | **David Fewer**: Secondary metabolite lecture|
-| 10:30-12:00 | **David Fewer**: Secondary metabolite hands-on: antiSMASH and BiG-SCAPE/CORASON|
+| 10:30-12:00 | **Tania Shishido Joutsen**: Secondary metabolite hands-on: antiSMASH and BiG-SCAPE/CORASON|
 | 12:00-13:00 | **Lunch** |
-| 13:00-14:00 | **Something from Fewer group** Secondary metabolite hands-on: BiG-SCAPE/CORASON |
+| 13:00-14:00 | **Tania Shishido Joutsen** Secondary metabolite hands-on: BiG-SCAPE/CORASON |
 | 14:30-16:00 | **Time for groupwork** |
 
 
