@@ -32,7 +32,7 @@ Check with `ls`; which folder did `mkdir $USER` create?
 This directory (`/scratch/project_2005590/your-user-name`) is your working directory.  
 Every time you log into Puhti, you should use `cd` to navigate to this directory, and **all the scripts are to be run in this folder**.  
 
-The raw data used on this course can be found in `/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ`.  
+The raw data used on this course can be found in `/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA`.  
 Instead of copying the data we will use links to this folder in all of the needed tasks.  
 Why don't we want 14 students copying data to their own folders?
 
@@ -76,16 +76,16 @@ Now each group will work with their own sequences. Create the variables R1 and R
 
 ```bash
 #### Illumina Raw sequences for the cyanobacteria strain 328
-R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A045-328-GGTCCATT-AGTAGGCT-Tania-Shishido-run20211223R_S45_L001_R1_001.fastq.gz
-R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A045-328-GGTCCATT-AGTAGGCT-Tania-Shishido-run20211223R_S45_L001_R2_001.fastq.gz
+R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA/A045-328-GGTCCATT-AGTAGGCT-Tania-Shishido-run20211223R_S45_L001_R1_001.fastq.gz
+R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA/A045-328-GGTCCATT-AGTAGGCT-Tania-Shishido-run20211223R_S45_L001_R2_001.fastq.gz
 
 #### Illumina Raw sequences for the cyanobacteria strain 327
-R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A044-327-2-CTTGCCTC-GTTATCTC-Tania-Shishido-run20211223R_S44_L001_R1_001.fastq.gz
-R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/A044-327-2-CTTGCCTC-GTTATCTC-Tania-Shishido-run20211223R_S44_L001_R2_001.fastq.gz
+R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA/A044-327-2-CTTGCCTC-GTTATCTC-Tania-Shishido-run20211223R_S44_L001_R1_001.fastq.gz
+R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA/A044-327-2-CTTGCCTC-GTTATCTC-Tania-Shishido-run20211223R_S44_L001_R2_001.fastq.gz
 
 #### Illumina Raw sequences for the cyanobacteria strain 193
-R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/Oscillatoria-193_1.fastq.gz
-R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_MISEQ/Oscillatoria-193_2.fastq.gz
+R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA/Oscillatoria-193_1.fastq.gz
+R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA/Oscillatoria-193_2.fastq.gz
 ```
 
 
