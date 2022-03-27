@@ -18,7 +18,7 @@
 ## Tuesday - EE-building, Walter-sali
 | Time | Description |
 | --- | --- |
-| 08:30-09:00 | **Tania Shishido Joutsen**: [Assembly QC lecture] (Lectures/lecture_assemblyQC.pdf)|
+| 08:30-09:00 | **Tania Shishido Joutsen**: [Assembly QC lecture](Lectures/lecture_assemblyQC.pdf)|
 | 09:00-09:30 | **Endrews Delbaje**: Cleaning the genome|
 | 09:30-10:00 | **Endrews Delbaje**: Assembly QC hands-on|
 | 10:00-10:30 | **Endrews Delbaje**: Annotation lecture|
