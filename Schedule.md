@@ -19,8 +19,8 @@
 | Time | Description |
 | --- | --- |
 | 8:30-09:00 | **Tania Shishido Joutsen**: Assembly QC lecture |
-| 9:00-09:30 | **Endrews Delbaje**: Assembly QC hands-on|
-| 9:30-10:00 | **Endrews Delbaje**: Cleaning the genome|
+| 9:00-09:30 | **Endrews Delbaje**: Cleaning the genome|
+| 9:30-10:00 | **Endrews Delbaje**: Assembly QC hands-on|
 | 10:00-10:30 | **Endrews Delbaje**: Annotation lecture|
 | 10:30-12:00 | **Endrews Delbaje**: Annotation hands-on|
 | 12:00-13:00 | **lunch** |
