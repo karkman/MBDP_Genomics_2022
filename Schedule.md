@@ -41,9 +41,9 @@
 ## Thursday - EE-building, Walter-sali
 | Time | Description |
 | --- | --- |
-| 08:30-10:00 | **Time for groupwork** |
-| 10:00-10:30 | **David Fewer**: Secondary metabolite lecture|
-| 10:30-12:00 | **Tania Shishido Joutsen**: Secondary metabolite hands-on: antiSMASH and BiG-SCAPE/CORASON|
+| 08:30-10:00 | **David Fewer**: Secondary metabolite lecture|
+| 10:00-10:30 | **Tania Shishido Joutsen**: Secondary metabolite hands-on: antiSMASH and BiG-SCAPE/CORASON|
+| 10:30-12:00 | **Time for groupwork** |
 | 12:00-13:00 | **Lunch** |
 | 13:00-14:00 | **Tania Shishido Joutsen** Secondary metabolite hands-on: BiG-SCAPE/CORASON |
 | 14:30-16:00 | **Time for groupwork** |
