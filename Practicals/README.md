@@ -416,7 +416,7 @@ cat CoverageTotal.bedgraph | awk '{total+=$4} END {print total/NR}'
 
 ## Genome completeness and contamination
 
-Now we have calculated different metrics for our genomes, but they donät really tell anything about the "real" quality of our genome.  
+Now we have calculated different metrics for our genomes, but they don't really tell anything about the "real" quality of our genome.  
 We will use checkM to calculate the completeness and possible contamination in our genomes.  
 Allocate some resources (>40G memory & 4 threads) and run checkM (v. 1.1.3.) from a singularity container.  
 
