@@ -391,7 +391,7 @@ seff JOBID
 
 You can check the taxonomic assignment of the assembled contigs with some visuals using the [Kaiju web server](https://kaiju.binf.ku.dk/server).
 
-This web tool only accepts compressed FASTA files (or FASTQ), so we need to compress our assembled genome file using `gzip`.
+This web tool only accepts compressed FASTA files (or FASTQ), so we need to compress our assembled genome file using `gzip`. The parameters on the web server can be left as is. 
 
 ```bash
 gzip -c your_assembly.fasta > your_assembly.fasta.gz
@@ -412,7 +412,7 @@ singularity exec --bind $PWD:$PWD /projappl/project_2005590/containers/quast_5.0
 
 To calculate the genome coverage, all the reads used for the assembly must be mapped to the final genome. For that, we can use three programs: Bowtie2 to map the reads; Samtools to sort and make an index of the mapped reads; and bedtools to make the calculation.
 
-The entire workflow can take a long time, so the bedtools output with the sequencing depth for each base in the genome is available for each cyanobacterial strain in `/scratch/project_2005590/COURSE_FILES/RESULTS/coverage_[strain_number]/CoverageTotal.bedgraph`.
+The entire workflow can take a long time, so the bedtools output with the sequencing depth for each base in the genome is available for each cyanobacterial strain in `/scratch/project_2005590/COURSE_FILES/RESULTS/coverage_[strain_number]/CoverageTotal.bedgraph` (don't forget to put the strain number).
 
 You can check the commands used in the workflow to generate this file in the script in: `/scratch/project_2005590/COURSE_FILES/SCRIPTS/genome_coverage_workflow.sh`.
 
@@ -436,7 +436,7 @@ The first column refers to the contig name, the second and third column refers t
 
 In order to calculate the final genome coverage we must calculate the average sequencing depth of all the bases in the genome. We can achieve this by using `awk`.
 
-This command will sum all the numbers in the fourth column of the file `CoverageTotal.bedgraph` and divide by the total numbers of lines (number of bases), giving the average number. The final result will be printed in your screen.
+This command will sum all the numbers in the fourth column of the file `CoverageTotal.bedgraph` and divide by the total numbers of lines (number of bases), giving the average number. The final result will be printed in your screen (or you can save the result in a file using `> coverage.txt` in the end of the command).
 
 ```bash
 cat CoverageTotal.bedgraph | awk '{total+=$4} END {print total/NR}'
