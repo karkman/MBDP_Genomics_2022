@@ -569,16 +569,6 @@ And then we're ready to run the whole pangenomics workflow.
 singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif anvi-run-workflow -w pangenomics -c config.json
 ```
 
-```
-for genome in 02_CONTIGS/*.db
-do
-    #singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif anvi-run-hmms -c $genome --num-threads 4
-    #singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif anvi-run-ncbi-cogs -c $genome --num-threads 4
-    #singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif anvi-scan-trnas -c $genome --num-threads 4
-    singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif anvi-run-scg-taxonomy -c $genome --num-threads 4
-done
-```
-
 When the workflow is ready, we can visualise the results interactively in anvi'o.  
 For that we need to connect to Puhti bit differently.  
 Log out from the current computing node, open a screen session and a new interactive connection to computing node.
