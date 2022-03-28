@@ -246,14 +246,6 @@ You can copy the file `multiqc_report.html` to your computer and open it in a we
 
 The QC for the Nanopore reads can be done with NanoPlot and NanoQC. They are plotting tools for long read sequencing data and alignments. You can read more about them in: [NanoPlot](https://github.com/wdecoster/NanoPlot) and [NanoQC](https://github.com/wdecoster/nanoQC)
 
-NanoPlot and NanoQC are not pre-installed to Puhti so we need to reset the modules and activate the virtual environment. If the environment is already loaded you can skip this step.
-
-```bash
-export PROJAPPL=/projappl/project_2005590
-module purge
-module load bioconda/3
-source activate mbdp_genomics
-```
 
 The nanopore data you will use can be found in the folder `/scratch/project_2005590/COURSE_FILES/RAWDATA_NANOPORE`
 
@@ -269,6 +261,14 @@ Then open a new interactive task with more memory
 
 ```bash
 sinteractive -A project_2005590 -m 45000
+```
+NanoPlot and NanoQC are not pre-installed to Puhti so we need to reset the modules and activate the virtual environment. If the environment is already loaded you can skip this step.
+
+```bash
+export PROJAPPL=/projappl/project_2005590
+module purge
+module load bioconda/3
+source activate mbdp_genomics
 ```
 
 Generate graphs for visualization of reads quality and length distribution
