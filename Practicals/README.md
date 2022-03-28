@@ -462,32 +462,48 @@ singularity exec --bind $GTDBTK_DATA_PATH:$GTDBTK_DATA_PATH,$PWD:$PWD,$TMPDIR:/t
 
 
 We will run the whole anvi'o part interactively. So again, allocate a computing node with enough memory (>40G) and 8 threads.  
+
+Make a new folder for pangenomics
 ```
 mkdir pangenomics
 cd pangenomics
+```
 
+Make sure you have at least a copy of each of your genomes in one folder and make a new environmental variable pointing there.
+```
 GENOME_DIR=ABSOLUTE/PATH/TO/GENOME/DIR
+```
 
+Then we will polish the contig names for each of the genomes before doing anything with the genomes.  
+And also copy few annotated reference genomes to be included in our pangenome.  
+```
 singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes ~/bin/anvio_7.sif \
-          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_193.fasta \
+          anvi-script-reformat-fasta --simplify-names -o Oscillatoriales_193.fasta \
           -r reformat_193_report.txt /genomes/GENOME1.fasta
 
 singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes ~/bin/anvio_7.sif \
-          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_327_2.fasta \
+          anvi-script-reformat-fasta --simplify-names -o Oscillatoriales_327_2.fasta \
           -r reformat_327_2_report.txt /genomes/GENOME2.fasta
 
 singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes ~/bin/anvio_7.sif \
-          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_328.fasta \
+          anvi-script-reformat-fasta --simplify-names -o Oscillatoriales_328.fasta \
           -r reformat_328_report.txt /genomes/GENOME3.fasta
 
 # copy reference genomes to your own folder
 cp /scratch/project_2005590/COURSE_FILES/closest_oscillatoriales_genomes/*.gbf ./
+```
 
-# annotate
+Although you already annotated your genomes, we'll do it once more, because we changed the names of the contigs.
+
+```
 module load biokit
 for strain in $(ls *.fasta); do prokka --cpus 8 --outdir ./ --prefix ${strain%.fasta} $strain; done
+```
 
-# process genbank files
+Now we have both Genbank files from the reference genomes and also from our own genomes.  
+Next things is to get the contigs, gene calls and annotations to separate files that anvi'o understands.
+
+```
 for genome in $(ls *.gbf)
 do
     singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
@@ -496,19 +512,22 @@ do
                                             --annotation-source prodigal \
                                             --annotation-version v2.6.3
 done
+```
 
+The pangenomcis part will be done using a anvi'o workflow (read more from here: )  
+And for that we need a file that specifies where the files from previous step are (called `fasta.txt`).  
 
-# make a fasta.txt file from these for pangenomics workflow
-
+```
+echo -e "name\tpath\texternal_gene_calls\tgene_functional_annotation" > fasta.txt
 for strain in $(ls *-contigs.fa)
 do
     echo -e ${strain%-contigs.fa}"\t"$strain"\t"${strain%-contigs.fa}"-external-gene-calls.txt\t"${strain%-contigs.fa}"-external-functions.txt"
-done > fasta.txt
+done >> fasta.txt
+```
+In addition to the `fasta.txt` file we need also a configuration file.  
+So make a file called `config.json` containing the following.  
 
-# afterwards add headers to fasta.txt file in any text editor, separated with tab
-##  name  path	external_gene_calls	gene_functional_annotation
-
-# And make a config.json file:
+```
 {
     "workflow_name": "pangenomics",
     "config_version": "2",
@@ -533,9 +552,15 @@ done > fasta.txt
       "threads": "8"
     }
 }
+```
+And then we're ready to run the whole pangenomics workflow.  
 
+```
 singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif anvi-run-workflow -w pangenomics -c config.json
+```
 
+
+```
 cd 03_PAN
 export ANVIOPORT=PORT
 singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
