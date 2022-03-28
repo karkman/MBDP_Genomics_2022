@@ -92,8 +92,8 @@ R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA/A044-327-2-CTTGCCTC-GT
 R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA/A044-327-2-CTTGCCTC-GTTATCTC-Tania-Shishido-run20211223R_S44_L001_R2_001.fastq.gz
 
 #### Illumina Raw sequences for the cyanobacteria strain 193
-R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA/Oscillatoria-193_1.fastq.gz
-R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA/Oscillatoria-193_2.fastq.gz
+R1=/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA/Oscillatoriales-193_1.fastq.gz
+R2=/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA/Oscillatoriales-193_2.fastq.gz
 ```
 
 
