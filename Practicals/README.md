@@ -455,6 +455,28 @@ singularity exec --bind $PWD:$PWD,$TMPDIR:/tmp /projappl/project_2005590/contain
               checkm lineage_wf -x fasta PATH/TO/GENOME/FOLDER OUTPUT/FOLDER -t 4 --tmpdir /tmp
 ```
 
+## Genome annotation with Prokka
+
+We can annotate our genome assembly using [Prokka](https://github.com/tseemann/prokka)
+
+```bash
+module purge
+module load biokit
+
+prokka --cpus 8 --outdir prokka_out --prefix your_strain_name path-to/your_assembly.fasta
+```
+
+Check the files inside the output folder. Can you find the genes involved in the synthesis of Geosmin in one or more of these files?
+
+### Optional - Annotation and visualization of CRISPR-Cas and Phages
+
+Some genome features are better annotated when considering the genome context of a region involving many genes, instead of looking at only one gene at the time. Two examples of this case are the CRISPR-Cas system and Phages.
+
+The CRISPR-Cas can be annotated using [CRISPRone](https://omics.informatics.indiana.edu/CRISPRone/denovo.php) and Phages can be annotated using [PHASTER](https://phaster.ca/).
+
+Can you find any differences in the annotation of some specific genes when comparing the results of these tools with the Prokka annotation?
+
+
 ## Name the strain
 
 After we know the completeness and the amount of possible contamination in our assembly, next thing is to give a name to our strain. In other words, what species did we sequence.  
