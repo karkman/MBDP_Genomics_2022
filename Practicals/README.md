@@ -538,8 +538,8 @@ singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
 
 singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
                                     anvi-get-sequences-for-gene-clusters \
-                                        -p 03_PAN/Oscillatoriales_pangenome-PAN.db \
-                                        -g 03_PAN/Oscillatoriales_pangenome-GENOMES.db \
+                                        -p Oscillatoriales_pangenome-PAN.db \
+                                        -g Oscillatoriales_pangenome-GENOMES.db \
                                         -C default -b SCG \
                                         --concatenate-gene-clusters \
                                         -o single-copy-core-genes.fa                               
@@ -549,7 +549,20 @@ singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
                                         -f single-copy-core-genes.fa  \
                                         -o SCG.tre
 
+# study the geosmin phylogeny
+singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+                                    anvi-get-sequences-for-gene-clusters \
+                                    -p Oscillatoriales_pangenome-PAN.db \
+                                    -g Oscillatoriales_pangenome-GENOMES.db \
+                                    --report-DNA-sequences \
+                                    -C default -b Geosmin -o geosmin.fasta
 
+# This time you need  to align the sequences (use  mafft) and construct the tree from  the aligned sequence file (raxml)
+# concatenate the header before alignment
+sed -i 's/[|:]/_/g' geosmin.fasta
+
+ginsi geosmin.fasta > geosmin_aln.fasta 
+raxmlHPC -f a -x 12345 -p 12345 -# 100 -m GTRGAMMA -s geosmin_aln.fasta -n geosmin
 ```
 
 ## Detection of secondary metabolites biosynthesis gene clusters
