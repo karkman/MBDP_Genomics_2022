@@ -10,10 +10,11 @@ __Table of Contents:__
 7. [Assembly QC](#assembly-qc)
 8. [Calculate the genome coverage](#calculate-the-genome-coverage)
 9. [Genome completeness and contamination](#genome-completeness-and-contamination)
-10. [Name the strain](#name-the-strain)
-11. [Pangenomics](#pangenomics-with-anvio)
-12. [Detection  of secondary  metabolites biosynthesis gene clusters](#detection-of-secondary-metabolites-biosynthesis-gene-clusters)
-13. [Comparison of secondary metabolites biosynthesis gene clusters](#comparison-of-secondary-metabolites-biosynthesis-gene-clusters)
+10. [Genome annotation with Prokka](#genome-annotation-with-prokka)
+11. [Name the strain](#name-the-strain)
+12. [Pangenomics](#pangenomics-with-anvio)
+13. [Detection  of secondary  metabolites biosynthesis gene clusters](#detection-of-secondary-metabolites-biosynthesis-gene-clusters)
+14. [Comparison of secondary metabolites biosynthesis gene clusters](#comparison-of-secondary-metabolites-biosynthesis-gene-clusters)
 
 
 
@@ -457,11 +458,12 @@ singularity exec --bind $PWD:$PWD,$TMPDIR:/tmp /projappl/project_2005590/contain
 
 ## Genome annotation with Prokka
 
-We can annotate our genome assembly using [Prokka](https://github.com/tseemann/prokka)
+Now we can annotate our genome assembly using [Prokka](https://github.com/tseemann/prokka)
 
 ```bash
 module purge
 module load biokit
+module load bioperl
 
 prokka --cpus 8 --outdir prokka_out --prefix your_strain_name path-to/your_assembly.fasta
 ```
