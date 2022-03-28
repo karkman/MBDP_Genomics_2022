@@ -259,6 +259,14 @@ The nanopore data you will use can be found in the folder `/scratch/project_2005
 
 This run will require more computing resources, so you can apply for more memory or run in sbatch:
 
+First log out from the computing node
+
+```bash
+exit
+'''
+
+Then open a new interactive task with more memory
+
 ```bash
 sinteractive -A project_2005590 -m 45000
 ```
