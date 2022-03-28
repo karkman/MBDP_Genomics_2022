@@ -10,7 +10,7 @@
 | 11:30-12:00 | **David Fewer**: Introduction to the Cyanobacterial genomes analyzed during the course|
 | 12:00-13:00 | **Lunch** |
 | 13:00-13:15 | **Antti Karkman**: [Sequencing 101](Lectures/Sequencing101.pdf) |
-| 13:15-13:30 | **Jenni Hultman**: [Seq trimming and QC lecture](QC_filtering.pdf) |
+| 13:15-13:30 | **Jenni Hultman**: [Seq trimming and QC lecture](Lectures/QC_filtering.pdf) |
 | 13:30-14:30 | **ALL**: Hands-on [QC and trimming](Practicals/README.md#qc-and-trimming-for-illumina-reads) and MBDP coffee break at 14:00 |
 | 14:30-14:45 | **Jenni Hultman**: Assembly lecture |
 | 14:45-15:30 | **Endrews Delbaje**: [Assembly hands-on](Practicals/README.md#Genome-assembly-with-Spades) |
