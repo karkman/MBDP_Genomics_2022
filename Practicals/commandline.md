@@ -1,4 +1,5 @@
 # Working with the command line
+__Copied from:__  
 _MBDP metagenomics course 2021_  
 _Igor S. Pessi_
 ## Connecting to Puhti
