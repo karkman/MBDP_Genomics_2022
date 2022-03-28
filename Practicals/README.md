@@ -480,20 +480,21 @@ cd pangenomics
 Make sure you have at least a copy of each of your genomes in one folder and make a new environmental variable pointing there.
 ```
 GENOME_DIR=ABSOLUTE/PATH/TO/GENOME/DIR
+CONTAINERS=/projappl/project_2005590/containers/
 ```
 
 Then we will polish the contig names for each of the genomes before doing anything with the genomes.  
 And also copy few annotated reference genomes to be included in our pangenome.  
 ```
-singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes ~/bin/anvio_7.sif \
+singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes $CONTAINERS/anvio-7.sif \
           anvi-script-reformat-fasta --simplify-names -o Oscillatoriales_193.fasta \
           -r reformat_193_report.txt /genomes/GENOME1.fasta
 
-singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes ~/bin/anvio_7.sif \
+singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes $CONTAINERS/anvio-7.sif \
           anvi-script-reformat-fasta --simplify-names -o Oscillatoriales_327_2.fasta \
           -r reformat_327_2_report.txt /genomes/GENOME2.fasta
 
-singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes ~/bin/anvio_7.sif \
+singularity exec --bind $PWD:$PWD,$GENOME_DIR:/genomes $CONTAINERS/anvio-7.sif \
           anvi-script-reformat-fasta --simplify-names -o Oscillatoriales_328.fasta \
           -r reformat_328_report.txt /genomes/GENOME3.fasta
 
@@ -514,7 +515,7 @@ Next things is to get the contigs, gene calls and annotations to separate files 
 ```
 for genome in $(ls *.gbf)
 do
-    singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+    singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif \
                                         anvi-script-process-genbank \
                                             -i $genome -O ${genome%.gbf} \
                                             --annotation-source prodigal \
@@ -564,7 +565,17 @@ So make a file called `config.json` containing the following.
 And then we're ready to run the whole pangenomics workflow.  
 
 ```
-singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif anvi-run-workflow -w pangenomics -c config.json
+singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif anvi-run-workflow -w pangenomics -c config.json
+```
+
+```
+for genome in 02_CONTIGS/*.db
+do
+    #singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif anvi-run-hmms -c $genome --num-threads 4
+    #singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif anvi-run-ncbi-cogs -c $genome --num-threads 4
+    #singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif anvi-scan-trnas -c $genome --num-threads 4
+    singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif anvi-run-scg-taxonomy -c $genome --num-threads 4
+done
 ```
 
 When the workflow is ready, we can visualise the results interactively in anvi'o.  
@@ -581,13 +592,13 @@ ssh -L PORT:NODE_NAME.bullx:PORT USERk@puhti-loginX.csc.fi
 ```
 cd 03_PAN
 export ANVIOPORT=PORT
-singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif \
                                     anvi-display-pan \
                                         -g Oscillatoriales_pangenome-GENOMES.db \
                                         -p Oscillatoriales_pangenome-PAN.db \
                                         --server-only -P $ANVIOPORT
 
-singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif \
                                     anvi-get-sequences-for-gene-clusters \
                                         -p Oscillatoriales_pangenome-PAN.db \
                                         -g Oscillatoriales_pangenome-GENOMES.db \
@@ -595,13 +606,13 @@ singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
                                         --concatenate-gene-clusters \
                                         -o single-copy-core-genes.fa                               
 
-singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif \
                                     anvi-gen-phylogenomic-tree \
                                         -f single-copy-core-genes.fa  \
                                         -o SCG.tre
 
 # study the geosmin phylogeny
-singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
+singularity exec --bind $PWD:$PWD $CONTAINERS/anvio-7.sif \
                                     anvi-get-sequences-for-gene-clusters \
                                     -p Oscillatoriales_pangenome-PAN.db \
                                     -g Oscillatoriales_pangenome-GENOMES.db \
@@ -697,104 +708,6 @@ singularity exec --bind $GTDBTK_DATA_PATH:$GTDBTK_DATA_PATH,$PWD:$PWD  /projappl
 ~/projappl/ont-guppy/bin/guppy_basecaller -i fast5_pass/ -s BASECALLED/ -c ~/projappl/ont-guppy/data/dna_r9.4.1_450bps_hac.cfg --device auto --min_qscore 10
 cat BASECALLED/pass/*.fastq |gzip > BASECALLED/strain_328_nanopore.fastq.gz
 ```
-
-
-### Anvio pangenomics
-
-Reserve enough memory > 40 G
-```
-mkdir pangenomics
-cd pangenomics
-
-singularity exec --bind $PWD:$PWD,../all-genomes-193:/all-genomes-193 ~/bin/anvio_7.sif \
-          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_193.fasta -r reformat_193_report.txt /all-genomes-193/strain_328_MAG_00004-contigs.fa
-
-singularity exec --bind $PWD:$PWD,../assembly_327-2:/assembly_327-2 ~/bin/anvio_7.sif \
-          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_327_2.fasta -r reformat_327_2_report.txt /assembly_327-2/contigs.fasta
-
-singularity exec --bind $PWD:$PWD,../assembly_328:/assembly_328 ~/bin/anvio_7.sif \
-          anvi-script-reformat-fasta --simplify-names -o Oscillatoria_328.fasta -r reformat_328_report.txt /assembly_328/contigs.fasta
-
-cp ../../COURSE_FILES/closest_oscillatoriales_genomes/*.fasta.gz ./
-gunzip *.gz
-
-module load biokit
-for strain in $(ls *.fasta); do prokka --outdir ${strain%.fasta} --prefix ${strain%.fasta} $strain; done
-
-# process genbank files
-for genome in $(ls */*gbf)
-do
-    singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
-                                        anvi-script-process-genbank \
-                                            -i $genome -O ${genome%/*} \
-                                            --annotation-source prodigal \
-                                            --annotation-version v2.6.3
-done
-
-
-# make a fasta.txt file from these for pangenomics workflow
-
-for strain in $(ls *-contigs.fa)
-do
-    echo -e ${strain%-contigs.fa}"\t"$strain"\t"${strain%-contigs.fa}"-external-gene-calls.txt\t"${strain%-contigs.fa}"-external-functions.txt"
-done > fasta.txt
-
-# afterwards add headers to fasta.txt file in any text editor, separated with tab
-##  name  path	external_gene_calls	gene_functional_annotation
-
-# And make a config.json file:
-{
-    "workflow_name": "pangenomics",
-    "config_version": "2",
-    "project_name": "Oscillatoriales_pangenome",
-    "external_genomes": "external-genomes.txt",
-    "fasta_txt": "fasta.txt",
-    "anvi_gen_contigs_database": {
-        "--project-name": "{group}",
-        "--description": "",
-        "--skip-gene-calling": "",
-        "--ignore-internal-stop-codons": true,
-        "--skip-mindful-splitting": "",
-        "--contigs-fasta": "",
-        "--split-length": "",
-        "--kmer-size": "",
-        "--skip-predict-frame": "",
-        "--prodigal-translation-table": "",
-        "threads": ""
-    },
-    "output_dirs": {
-        "FASTA_DIR": "01_FASTA_contigs_workflow",
-        "CONTIGS_DIR": "02_CONTIGS_contigs_workflow",
-        "LOGS_DIR": "00_LOGS_pan_workflow"
-    }
-}
-
-singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif anvi-run-workflow -w pangenomics -c config.json
-
-export ANVIOPORT=PORT
-singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
-                                    anvi-display-pan \
-                                        -g Oscillatoriales_pangenome-GENOMES.db \
-                                        -p Oscillatoriales_pangenome-PAN.db \
-                                        --server-only -P $ANVIOPORT
-
-singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
-                                    anvi-get-sequences-for-gene-clusters \
-                                        -p 03_PAN/Oscillatoriales_pangenome-PAN.db \
-                                        -g 03_PAN/Oscillatoriales_pangenome-GENOMES.db \
-                                        -C default -b SCG \
-                                        --concatenate-gene-clusters \
-                                        -o single-copy-core-genes.fa                               
-
-singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
-                                    anvi-gen-phylogenomic-tree \
-                                        -f single-copy-core-genes.fa  \
-                                        -o SCG.tre
-
-
-```
-
-
 
 
 
