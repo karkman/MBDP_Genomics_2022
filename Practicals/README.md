@@ -525,7 +525,7 @@ do
 done >> fasta.txt
 ```
 In addition to the `fasta.txt` file we need also a configuration file.  
-So make a file called `config.json` containing the following.  
+So make a file called `config.json` containing the following.  
 
 ```
 {
