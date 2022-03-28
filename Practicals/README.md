@@ -19,8 +19,15 @@ __Table of Contents:__
 
 ## Setting up the course folders
 The main course directory is located in `/scratch/project_2005590`.  
-There you will set up your own directory where you wil perform all the tasks for this course.  
-So let's create a folder for you:
+There you will set up your own directory where you will perform all the tasks for this course.  
+
+First list all projects you're affiliated with in CSC.
+```
+csc-workspaces
+```
+
+You should see the course project `MBDP_genomics_2022`.
+So let's create a folder for you inside the scratch folder, you can find the path in the output from the previous command.
 
 ```bash
 cd /scratch/project_2005590
@@ -35,6 +42,7 @@ Every time you log into Puhti, you should use `cd` to navigate to this directory
 The raw data used on this course can be found in `/scratch/project_2005590/COURSE_FILES/RAWDATA_ILLUMINA`.  
 Instead of copying the data we will use links to this folder in all of the needed tasks.  
 Why don't we want 14 students copying data to their own folders?
+
 
 ## Interactive use of Puhti
 
@@ -561,7 +569,7 @@ singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif \
 # concatenate the header before alignment
 sed -i 's/[|:]/_/g' geosmin.fasta
 
-ginsi geosmin.fasta > geosmin_aln.fasta 
+ginsi geosmin.fasta > geosmin_aln.fasta
 raxmlHPC -f a -x 12345 -p 12345 -# 100 -m GTRGAMMA -s geosmin_aln.fasta -n geosmin
 ```
 

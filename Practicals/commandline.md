@@ -1,5 +1,6 @@
 # Working with the command line
-
+_MBDP metagenomics course 2021_  
+_Igor S. Pessi_
 ## Connecting to Puhti
 
 ### Windows users
@@ -232,23 +233,3 @@ rmdir myfolder
 ```
 
 Let's list the contents of the folder. What happened to `myfolder`?  
-
-## Setting up the course folders
-The main course directory is located in `/scratch/project_2001499`.  
-There you will set up your own directory where you wil perform all the tasks for this course.  
-So let's create a folder for you:
-
-```bash
-cd /scratch/project_2001499
-mkdir $USER
-```
-
-Check with `ls`; which folder did `mkdir $USER` create?
-
-This directory (`/scratch/project_2001499/your-user-name`) is your working directory.  
-Every time you log into Puhti, you should use `cd` to navigate to this directory, and **all the scripts are to be run in this folder**.  
-
-The raw data used on this course can be found in `/scratch/project_2001499/COURSE_FILES/RAWDATA`.  
-Instead of copying the data we will use links to this folder in all of the needed tasks.  
-Why don't we want 14 students copying data to their own folders?
-
