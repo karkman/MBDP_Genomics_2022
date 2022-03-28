@@ -524,7 +524,7 @@ done
 ```
 
 The pangenomcis part will be done using a anvi'o workflow (read more from here: )  
-And for that we need a file that specifies where the files from previous step are (called `fasta.txt`).  
+And for that we need a file that specifies where the files from previous step are (called `fasta.txt`).  
 
 ```
 echo -e "name\tpath\texternal_gene_calls\tgene_functional_annotation" > fasta.txt
