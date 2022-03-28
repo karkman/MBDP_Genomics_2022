@@ -344,7 +344,7 @@ R2=trimmed/"$strain"_pseq_2.fastq
 We will use the trimmed Illumina and Nanopore sequences to assemble the cyanobacteria genomes. Check the commands used using `spades.py -h`
 
 ```bash
-spades.py --isolate --nanopore nanopore.trimmed.fastq.gz -1 $R1 -2 $R2 -o spades_hybrid_out -t 8
+spades.py --nanopore nanopore.trimmed.fastq.gz -1 $R1 -2 $R2 -o spades_hybrid_out -t 8
 ```
 
 If you have time, you can try different options for assembly. Read more from [here](https://cab.spbu.ru/files/release3.15.0/manual.html) and experiment.  
