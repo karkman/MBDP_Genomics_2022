@@ -387,6 +387,17 @@ seff JOBID
 **NOTE:** Change **JOBID** the the job id number you got when you submitted the script.
 
 
+### Optional - Visualizing the taxonomic assignment of contigs with the Kaiju web server
+
+You can check the taxonomic assignment of the assembled contigs with some visuals using the [Kaiju web server](https://kaiju.binf.ku.dk/server).
+
+This web tool only accepts compressed FASTA files (or FASTQ), so we need to compress our assembled genome file using `gzip`.
+
+```bash
+gzip -c your_assembly.fasta > your_assembly.fasta.gz
+```
+
+
 ## Assembly QC
 
 After the assembly has finished we will use Quality Assessment Tool for Genome Assemblies, [Quast](http://quast.sourceforge.net/) for (comparing and) evaluating our assemblies. Quast can be found from Puhti, but since there might be some incompability issues with Python2 and Python3, we will use a Singularity container that has Quast installed.  
