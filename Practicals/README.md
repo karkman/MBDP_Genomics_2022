@@ -559,6 +559,16 @@ And then we're ready to run the whole pangenomics workflow.
 singularity exec --bind $PWD:$PWD ~/bin/anvio_7.sif anvi-run-workflow -w pangenomics -c config.json
 ```
 
+When the workflow is ready, we can visualise the results interactively in anvi'o.  
+For that we need to connect to Puhti bit differently.  
+Log out from the current computing node, open a screen session and a new interactive connection to computing node.
+Then take note of the computing node name, the login node number and your port number, you'll need them all in the next part.
+
+Make a new connection using this command (with the right PORT, NODE_NAME, USER and login node (X))
+```
+ssh -L PORT:NODE_NAME.bullx:PORT USERk@puhti-loginX.csc.fi
+```
+
 
 ```
 cd 03_PAN
