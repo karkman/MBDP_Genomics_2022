@@ -263,7 +263,7 @@ First log out from the computing node
 
 ```bash
 exit
-'''
+```
 
 Then open a new interactive task with more memory
 
