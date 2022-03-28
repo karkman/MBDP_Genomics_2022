@@ -393,7 +393,8 @@ After the assembly has finished we will use Quality Assessment Tool for Genome A
 More about Singularity: [More general introduction](https://sylabs.io/guides/3.5/user-guide/introduction.html) and [a bit more CSC specific](https://docs.csc.fi/computing/containers/run-existing/).
 
 ```
-singularity exec --bind $PWD:$PWD /projappl/project_2005590/containers/quast_5.0.2.sif quast.py -o quast_out kaiju_out_filtered.fasta -t 4
+singularity exec --bind $PWD:$PWD /projappl/project_2005590/containers/quast_5.0.2.sif \
+                                                  quast.py -o quast_out kaiju_out_filtered.fasta -t 4
 ```
 
 ## Calculate the genome coverage
