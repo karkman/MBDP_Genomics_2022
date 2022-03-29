@@ -409,6 +409,9 @@ singularity exec --bind $PWD:$PWD /projappl/project_2005590/containers/quast_5.0
                                                   quast.py -o quast_out kaiju_out_filtered.fasta -t 4
 ```
 
+Now you can move the file `quast_out/report.html` to your computer and look for the quality control files in the web browser of your preference.
+
+
 ## Calculate the genome coverage
 
 To calculate the genome coverage, all the reads used for the assembly must be mapped to the final genome. For that, we can use three programs: Bowtie2 to map the reads; Samtools to sort and make an index of the mapped reads; and bedtools to make the calculation.
