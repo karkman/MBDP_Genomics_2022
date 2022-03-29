@@ -165,7 +165,7 @@ Then make a new folder (`FASTQC`) for the QC files of the trimmed data and run f
 
 ```bash
 mkdir fastqc_out_trimmed
-fastqc trimmed/cd T *.fastq -o fastqc_out_trimmed/ -t 1
+fastqc trimmed/*.fastq -o fastqc_out_trimmed/ -t 1
 ```
 
 
