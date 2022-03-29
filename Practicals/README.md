@@ -10,10 +10,11 @@ __Table of Contents:__
 7. [Assembly QC](#assembly-qc)
 8. [Calculate the genome coverage](#calculate-the-genome-coverage)
 9. [Genome completeness and contamination](#genome-completeness-and-contamination)
-10. [Name the strain](#name-the-strain)
-11. [Pangenomics](#pangenomics-with-anvio)
-12. [Detection  of secondary  metabolites biosynthesis gene clusters](#detection-of-secondary-metabolites-biosynthesis-gene-clusters)
-13. [Comparison of secondary metabolites biosynthesis gene clusters](#comparison-of-secondary-metabolites-biosynthesis-gene-clusters)
+10. [Genome annotation with Prokka](#genome-annotation-with-prokka)
+11. [Name the strain](#name-the-strain)
+12. [Pangenomics](#pangenomics-with-anvio)
+13. [Detection  of secondary  metabolites biosynthesis gene clusters](#detection-of-secondary-metabolites-biosynthesis-gene-clusters)
+14. [Comparison of secondary metabolites biosynthesis gene clusters](#comparison-of-secondary-metabolites-biosynthesis-gene-clusters)
 
 
 
@@ -164,7 +165,7 @@ Then make a new folder (`FASTQC`) for the QC files of the trimmed data and run f
 
 ```bash
 mkdir fastqc_out_trimmed
-fastqc trimmed/cd T *.fastq -o fastqc_out_trimmed/ -t 1
+fastqc trimmed/*.fastq -o fastqc_out_trimmed/ -t 1
 ```
 
 
@@ -343,7 +344,7 @@ R2=trimmed/"$strain"_pseq_2.fastq
 We will use the trimmed Illumina and Nanopore sequences to assemble the cyanobacteria genomes. Check the commands used using `spades.py -h`
 
 ```bash
-spades.py --isolate --nanopore nanopore.trimmed.fastq.gz -1 $R1 -2 $R2 -o spades_hybrid_out -t 8
+spades.py --nanopore nanopore.trimmed.fastq.gz -1 $R1 -2 $R2 -o spades_hybrid_out -t 8
 ```
 
 If you have time, you can try different options for assembly. Read more from [here](https://cab.spbu.ru/files/release3.15.0/manual.html) and experiment.  
@@ -387,6 +388,17 @@ seff JOBID
 **NOTE:** Change **JOBID** the the job id number you got when you submitted the script.
 
 
+### Optional - Visualizing the taxonomic assignment of contigs with the Kaiju web server
+
+You can check the taxonomic assignment of the assembled contigs with some visuals using the [Kaiju web server](https://kaiju.binf.ku.dk/server).
+
+This web tool only accepts compressed FASTA files (or FASTQ), so we need to compress our assembled genome file using `gzip`. The parameters on the web server can be left as is. 
+
+```bash
+gzip -c your_assembly.fasta > your_assembly.fasta.gz
+```
+
+
 ## Assembly QC
 
 After the assembly has finished we will use Quality Assessment Tool for Genome Assemblies, [Quast](http://quast.sourceforge.net/) for (comparing and) evaluating our assemblies. Quast can be found from Puhti, but since there might be some incompability issues with Python2 and Python3, we will use a Singularity container that has Quast installed.  
@@ -401,7 +413,7 @@ singularity exec --bind $PWD:$PWD /projappl/project_2005590/containers/quast_5.0
 
 To calculate the genome coverage, all the reads used for the assembly must be mapped to the final genome. For that, we can use three programs: Bowtie2 to map the reads; Samtools to sort and make an index of the mapped reads; and bedtools to make the calculation.
 
-The entire workflow can take a long time, so the bedtools output with the sequencing depth for each base in the genome is available for each cyanobacterial strain in `/scratch/project_2005590/COURSE_FILES/RESULTS/coverage_[strain_number]/CoverageTotal.bedgraph`.
+The entire workflow can take a long time, so the bedtools output with the sequencing depth for each base in the genome is available for each cyanobacterial strain in `/scratch/project_2005590/COURSE_FILES/RESULTS/coverage_[strain_number]/CoverageTotal.bedgraph` (don't forget to put the strain number).
 
 You can check the commands used in the workflow to generate this file in the script in: `/scratch/project_2005590/COURSE_FILES/SCRIPTS/genome_coverage_workflow.sh`.
 
@@ -425,7 +437,7 @@ The first column refers to the contig name, the second and third column refers t
 
 In order to calculate the final genome coverage we must calculate the average sequencing depth of all the bases in the genome. We can achieve this by using `awk`.
 
-This command will sum all the numbers in the fourth column of the file `CoverageTotal.bedgraph` and divide by the total numbers of lines (number of bases), giving the average number. The final result will be printed in your screen.
+This command will sum all the numbers in the fourth column of the file `CoverageTotal.bedgraph` and divide by the total numbers of lines (number of bases), giving the average number. The final result will be printed in your screen (or you can save the result in a file using `> coverage.txt` in the end of the command).
 
 ```bash
 cat CoverageTotal.bedgraph | awk '{total+=$4} END {print total/NR}'
@@ -443,6 +455,29 @@ Before running checkM, it might be good to put all genomes to one folder.
 singularity exec --bind $PWD:$PWD,$TMPDIR:/tmp /projappl/project_2005590/containers/checkM_1.1.3.sif \
               checkm lineage_wf -x fasta PATH/TO/GENOME/FOLDER OUTPUT/FOLDER -t 4 --tmpdir /tmp
 ```
+
+## Genome annotation with Prokka
+
+Now we can annotate our genome assembly using [Prokka](https://github.com/tseemann/prokka)
+
+```bash
+module purge
+module load biokit
+module load bioperl
+
+prokka --cpus 8 --outdir prokka_out --prefix your_strain_name path-to/your_assembly.fasta
+```
+
+Check the files inside the output folder. Can you find the genes involved in the synthesis of Geosmin in one or more of these files?
+
+### Optional - Annotation and visualization of CRISPR-Cas and Phages
+
+Some genome features are better annotated when considering the genome context of a region involving many genes, instead of looking at only one gene at the time. Two examples of this case are the CRISPR-Cas system and Phages.
+
+The CRISPR-Cas can be annotated using [CRISPRone](https://omics.informatics.indiana.edu/CRISPRone/denovo.php) and Phages can be annotated using [PHASTER](https://phaster.ca/).
+
+Can you find any differences in the annotation of some specific genes when comparing the results of these tools with the Prokka annotation?
+
 
 ## Name the strain
 
