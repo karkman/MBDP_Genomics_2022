@@ -459,6 +459,13 @@ singularity exec --bind $PWD:$PWD,$TMPDIR:/tmp /projappl/project_2005590/contain
               checkm lineage_wf -x fasta PATH/TO/GENOME/FOLDER OUTPUT/FOLDER -t 4 --tmpdir /tmp
 ```
 
+If you missed the output of checkM, you can re-run just the last part with:
+
+```
+singularity exec --bind $PWD:$PWD,$TMPDIR:/tmp /projappl/project_2005590/containers/checkM_1.1.3.sif \
+checkm qa ./OUTPUT/lineage.ms ./OUTPUT
+```
+
 ## Genome annotation with Prokka
 
 Now we can annotate our genome assembly using [Prokka](https://github.com/tseemann/prokka)
