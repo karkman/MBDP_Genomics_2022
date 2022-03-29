@@ -22,7 +22,7 @@
 | 08:30-09:00 | **Tania Shishido Joutsen**: [Assembly QC lecture](Lectures/lecture_assemblyQC.pdf)|
 | 09:00-09:30 | **Endrews Delbaje**: [Cleaning the genome](Practicals/README.md#Eliminate-contaminant-contigs-with-Kaiju)|
 | 09:30-10:00 | **Endrews Delbaje**: [Assembly QC hands-on](Practicals/README.md#Assembly_QC)|
-| 10:00-10:30 | **Endrews Delbaje**: Annotation lecture|
+| 10:00-10:30 | **Endrews Delbaje**: [Annotation lecture](Lectures/Genome_Annotation.pdf)|
 | 10:30-12:00 | **Endrews Delbaje**: Annotation hands-on|
 | 12:00-13:00 | **Lunch** |
 | 13:00-16:00 | **Endrews Delbaje**:KBase tutorial and hands-on|
