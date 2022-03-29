@@ -392,7 +392,7 @@ seff JOBID
 
 You can check the taxonomic assignment of the assembled contigs with some visuals using the [Kaiju web server](https://kaiju.binf.ku.dk/server).
 
-This web tool only accepts compressed FASTA files (or FASTQ), so we need to compress our assembled genome file using `gzip`. The parameters on the web server can be left as is. 
+This web tool only accepts compressed FASTA files (or FASTQ), so we need to compress our assembled genome file using `gzip`. The parameters on the web server can be left as is.
 
 ```bash
 gzip -c your_assembly.fasta > your_assembly.fasta.gz
@@ -651,7 +651,11 @@ singularity exec --bind $PWD:$PWD $CONTAINERS/anvio_7.sif \
 # concatenate the header before alignment
 sed -i 's/[|:]/_/g' geosmin.fasta
 
+module load biokit
 ginsi geosmin.fasta > geosmin_aln.fasta
+
+module purge
+module load raxml
 raxmlHPC -f a -x 12345 -p 12345 -# 100 -m GTRGAMMA -s geosmin_aln.fasta -n geosmin
 ```
 
