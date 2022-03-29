@@ -35,7 +35,11 @@ Eduroam or Helsinki UniGuest networks are available
 
 ## Organizers and teachers
 Docent Jenni Hultman, University of Helsinki
+
 Docent Antti Karkman, University of Helsinki
+
 PhD Tania Keiko Shishido Joutsen, University of Helsinki
+
 MSc Endrews Delbaje, University of Sao Paulo
+
 Docent David Fewer, Delbaje
