@@ -621,11 +621,27 @@ For that we need to connect to Puhti bit differently.
 Log out from the current computing node, open a screen session and a new interactive connection to computing node.
 Then take note of the computing node name, the login node number and your port number, you'll need them all in the next part.
 
-Make a new connection using this command (with the right PORT, NODE_NAME, USER and login node (X))
-```
-ssh -L PORT:NODE_NAME.bullx:PORT USERk@puhti-loginX.csc.fi
-```
+### Tunneling the interactive interafce
+Although you can install anvi'o on your own computer (and you're free to do so, but we won't have time to help in that), we will run anvi'o in Puhti and tunnel the interactive interface to your local computer.
+To be able to to do this, everyone needs to use a different port for tunneling and your port number will be given on the course.
 
+Connecting using a tunnel is a bit tricky and involves several steps, so pay special attention.
+Detach from your screen and note on which login node you're on. Then re-attach and note the ID of the computing node your logged in. Then you will also need to remember your port number.
+
+Then you can log out and log in again, but this time in a bit different way.
+You need to specify your PORT and the NODEID to which you connected and also the NUMBER of the login node you where your screen is running. Also change your username in the command below.
+```
+ssh -L PORT:NODEID.bullx:PORT USERNAME@puhti-loginNUMBER.csc.fi
+```
+And in windows using Putty:
+In SSH tab select "tunnels". Add:
+
+Source port: PORT
+Destination: NODEID.bullx:PORT
+Click add and connect to the right login node, login1 or login2.
+
+Then go back to your screen and launch the interactive interface.
+Remember to change the PORT.
 
 ```
 cd 03_PAN
