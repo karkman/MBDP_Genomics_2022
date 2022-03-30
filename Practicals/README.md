@@ -705,7 +705,7 @@ Got to `https://antismash.secondarymetabolites.org/#!/start`. You can load the a
 When the analysis is ready, you may be able to answer the following questions:
 
 1. How many secondary metabolites biosynthetic gene clusters (BGC) were detected?
-2. Which different types of BGC were detected and qhat is the difference among these types?
+2. Which different types of BGC were detected and what is the difference among these types?
 3. Do you think your strain produce all these metabolites? Why?
 
 
