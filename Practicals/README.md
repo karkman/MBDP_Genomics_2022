@@ -628,6 +628,17 @@ To be able to to do this, everyone needs to use a different port for tunneling a
 Connecting using a tunnel is a bit tricky and involves several steps, so pay special attention.
 Detach from your screen and note on which login node you're on. Then re-attach and note the ID of the computing node your logged in. Then you will also need to remember your port number.
 
+Mini manual for screen:
+
+    screen -S NAME - open a screen and give it a session name NAME
+    screen - open new screen without specifying any name
+    screen -ls - list all open sessions
+    ctrl + a + d - to detach from a session (from inside the screen)
+    screen -r NAME - re-attach to a detached session using the name
+    screen -rD - re-attach to a attached session
+    exit - close the screen and kill all processes running inside the screen (from inside the screen)
+
+
 Then you can log out and log in again, but this time in a bit different way.
 You need to specify your PORT and the NODEID to which you connected and also the NUMBER of the login node you where your screen is running. Also change your username in the command below.
 ```
