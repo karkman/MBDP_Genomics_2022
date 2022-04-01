@@ -42,4 +42,8 @@ PhD Tania Keiko Shishido Joutsen, University of Helsinki
 
 MSc Endrews Delbaje, University of Sao Paulo
 
-Docent David Fewer, Delbaje
+Docent David Fewer, University of Helsinki
+
+## Feedback
+
+https://presemo.helsinki.fi/mbdp105/
