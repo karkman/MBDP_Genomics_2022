@@ -42,7 +42,7 @@
 | Time | Description |
 | --- | --- |
 | 08:30-10:00 | **Time for groupwork** |
-| 10:00-10:30 | **David Fewer**: Secondary metabolite lecture|
+| 10:00-10:30 | **Tania Shishido Joutsen**: [Secondary metabolite lecture](Lectures/lecture_antismash_and_bigscape.pdf)|
 | 10:30-12:00 | **Tania Shishido Joutsen**: Secondary metabolite hands-on:  [antiSMASH](Practicals/README.md#Detection-of-secondary-metabolites-biosynthesis-gene-clusters) and  [BiG-SCAPE/CORASON](Practicals/README.md#Comparison-of-secondary-metabolites-biosynthesis-gene-clusters)|
 | 12:00-13:00 | **Lunch** |
 | 13:00-14:30 | **Tania Shishido Joutsen** Secondary metabolite hands-on: [BiG-SCAPE/CORASON](Practicals/README.md#Comparison-of-secondary-metabolites-biosynthesis-gene-clusters) |
